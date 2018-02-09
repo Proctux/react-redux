@@ -7656,6 +7656,22 @@ sugarss@^1.0.0:
   dependencies:
     postcss "^6.0.14"
 
+suitcss-components-grid@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/suitcss-components-grid/-/suitcss-components-grid-4.0.0.tgz#70758374b35d2b1f134354c4a9b8be294d0bd2c3"
+
+suitcss-utils-after@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/suitcss-utils-after/-/suitcss-utils-after-1.0.1.tgz#23086dc0a1151f236de33a4c696a7b83412f02d4"
+
+suitcss-utils-before@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/suitcss-utils-before/-/suitcss-utils-before-1.0.1.tgz#977f1b46b65db140571ebe5f767a12a4a7bc4931"
+
+suitcss-utils-size@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/suitcss-utils-size/-/suitcss-utils-size-2.0.1.tgz#37b74154fad4b885b41eaad97e7fafdcc598b852"
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
