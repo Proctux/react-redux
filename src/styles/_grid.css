@@ -1,0 +1,34 @@
+@import 'suitcss-components-grid';
+@import 'suitcss-utils-size';
+@import 'suitcss-utils-after';
+@import 'suitcss-utils-before';
+
+/* ---------------------------------------
+*  GRID SETUP
+* --------------------------------------- */
+.Grid {
+  width: 100%;
+}
+
+@media (--lg-viewport) {
+  .Grid {
+    max-width: 1170px;
+    margin: 0 auto;
+  }
+
+  .u-lg-hidden {
+    display: none;
+  }
+}
+
+@media (--md-viewport) {
+  .u-md-hidden {
+    display: none;
+  }
+}
+
+@media (--sm-viewport) {
+  .u-sm-hidden {
+    display: none;
+  }
+}
