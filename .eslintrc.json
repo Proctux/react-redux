@@ -1,0 +1,88 @@
+{
+  "parser": "babel-eslint",
+
+  "extends": ["airbnb", "prettier", "prettier/react"],
+
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack/webpack.config.eslint.js"
+      }
+    }
+  },
+
+  "plugins": ["react", "prettier"],
+
+  "rules": {
+    "semi": ["error", "never"],
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "info", "error"]
+      }
+    ],
+    "arrow-parens": ["error", "as-needed"],
+
+    "import/named": "error",
+    "import/prefer-default-export": "off",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxEOF": 1,
+        "maxBOF": 0
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/stories.js",
+          "**/*.dev.js",
+          "**/*.test.js",
+          "server.js",
+          "postcss.config.js",
+          "webpack/webpack.config.*"
+        ]
+      }
+    ],
+
+    "react/jsx-filename-extension": "off",
+    "react/jsx-no-bind": [
+      1,
+      {
+        "ignoreRefs": false,
+        "allowArrowFunctions": false,
+        "allowBind": true
+      }
+    ],
+
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "semi": false,
+        "parser": "babylon",
+        "printWidth": 100
+      }
+    ],
+
+    "jsx-a11y/href-no-hash": 0
+  }
+}
