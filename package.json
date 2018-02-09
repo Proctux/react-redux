@@ -50,7 +50,11 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "^1.1.0",
-    "rewire": "^3.0.2"
+    "rewire": "^3.0.2",
+    "suitcss-components-grid": "^4.0.0",
+    "suitcss-utils-after": "^1.0.1",
+    "suitcss-utils-before": "^1.0.1",
+    "suitcss-utils-size": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.5",
