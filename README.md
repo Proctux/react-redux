@@ -14,4 +14,5 @@ You can select to add:
 To use this boilerplate follow this steps:
 
 * Clone this repository: `git clone https://github.com/JungleDevs/boilerplate-react.git PROJECT_NAME`
+* Run: `yarn`
 * Run: `node setup.js` and follow the steps

@@ -9,13 +9,13 @@ const rl = readline.createInterface(process.stdin, process.stdout)
 // Setup functions
 const createDevBranch = () =>
   new Promise((resolve, reject) => {
-    exec('git checkout -b dev', (error, stdout) => {
+    exec('git fetch --all && git checkout -b dev', (error, stdout) => {
       if (error) {
         reject(error)
-        return
+      } else {
+        console.info(stdout)
+        resolve('\n\n============== Dev branch created ==============\n\n')
       }
-      console.info(stdout)
-      resolve('\n\n============== Dev branch created ==============\n\n')
     })
   })
 
@@ -24,22 +24,19 @@ const questionStorybook = stdout => {
   return new Promise((resolve, reject) => {
     rl.question('Would you like to use storybook?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
-        exec('git merge storybook', (error, output) => {
+        exec('git merge origin/storybook', (error, output) => {
           if (error) {
             reject(error)
-            return rl.close()
           }
           console.info(output)
-          rl.close()
-          return resolve('\n\n============== Merged storybook branch ==============\n\n')
+          resolve('\n\n============== Merged storybook branch ==============\n\n')
         })
+      } else if (answer === '2') {
+        resolve('\n\n============== No storybook selected ==============\n\n')
+      } else {
+        reject(answer)
       }
-      if (answer === '2') {
-        rl.close()
-        return resolve('\n\n============== No storybook selected ==============\n\n')
-      }
-      resolve(answer)
-      return questionStorybook('\n\n============== Incorrect answer ==============\n\n')
+      rl.close()
     })
   })
 }
@@ -50,10 +47,10 @@ const mergeOnMaster = stdout => {
     exec('git checkout master && git merge dev', (error, output) => {
       if (error) {
         reject(error)
-        return
+      } else {
+        console.info(output)
+        resolve('\n\n============== Dev branch merged on master ==============\n\n')
       }
-      console.info(output)
-      resolve('\n\n============== Dev branch merged on master ==============\n\n')
     })
   })
 }
@@ -64,15 +61,17 @@ const deleteGit = stdout => {
     exec('rm -rf .git/ && rm -rf setup.js', (error, output) => {
       if (error) {
         reject(error)
-        return
+      } else {
+        console.info(output)
+        resolve('\n\n============== Delete git and setup files ==============\n\n')
       }
-      console.info(output)
-      resolve('\n\n============== Delete git and setup files ==============\n\n')
     })
   })
 }
 
-const finalMessage = stdout => console.info(stdout)
+const finalMessage = stdout => {
+  console.info(stdout)
+}
 
 const deleteDevBranch = () => {
   exec('git checkout master && git branch -D dev', (error, stdout) => {
