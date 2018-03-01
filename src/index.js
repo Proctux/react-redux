@@ -6,7 +6,6 @@ import { ConnectedRouter } from 'react-router-redux'
 import './bootstrap'
 import setupApp from './setupApp'
 import Routes from './routes'
-import registerServiceWorker from './registerServiceWorker'
 
 const root = () =>
   setupApp().then(({ store, history }) => {
@@ -18,7 +17,6 @@ const root = () =>
       </Provider>,
       document.getElementById('root')
     )
-    registerServiceWorker()
   })
 
 root()
