@@ -41,6 +41,28 @@ const questionStorybook = stdout => {
   })
 }
 
+const questionServer = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    rl.question('Would you like to use express server with ssr?\n1- Yes\n2- No\n', answer => {
+      if (answer === '1') {
+        exec('git merge origin/ssr', (error, output) => {
+          if (error) {
+            reject(error)
+          }
+          console.info(output)
+          resolve('\n\n============== Merged ssr branch ==============\n\n')
+        })
+      } else if (answer === '2') {
+        resolve('\n\n============== No expresss server with ssr selected ==============\n\n')
+      } else {
+        reject(answer)
+      }
+      rl.close()
+    })
+  })
+}
+
 const mergeOnMaster = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
@@ -82,6 +104,7 @@ const deleteDevBranch = () => {
 // Execute flow
 createDevBranch()
   .then(stdout => questionStorybook(stdout))
+  .then(stdout => questionServer(stdout))
   .then(stdout => mergeOnMaster(stdout))
   .then(stdout => deleteGit(stdout))
   .then(stdout => finalMessage(stdout))

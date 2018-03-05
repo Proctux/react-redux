@@ -8,6 +8,7 @@ It uses React 16 + Redux + React-Router 4.0.
 You can select to add:
 
 * Storybook
+* Express server with Server-side Rendering
 
 ## Setup
 
