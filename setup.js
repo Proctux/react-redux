@@ -24,7 +24,7 @@ const questionStorybook = stdout => {
   return new Promise((resolve, reject) => {
     rl.question('Would you like to use storybook?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
-        exec('git merge origin/storybook', (error, output) => {
+        exec('git merge --no-edit origin/storybook', (error, output) => {
           if (error) {
             reject(error)
           }
@@ -46,7 +46,7 @@ const questionServer = stdout => {
   return new Promise((resolve, reject) => {
     rl.question('Would you like to use express server with ssr?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
-        exec('git merge origin/ssr', (error, output) => {
+        exec('git merge --no-edit origin/ssr', (error, output) => {
           if (error) {
             reject(error)
           }
@@ -66,7 +66,7 @@ const questionServer = stdout => {
 const mergeOnMaster = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
-    exec('git checkout master && git merge dev', (error, output) => {
+    exec('git checkout master && git merge --no-edit dev && yarn', (error, output) => {
       if (error) {
         reject(error)
       } else {
