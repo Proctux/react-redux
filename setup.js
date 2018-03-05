@@ -4,8 +4,6 @@ const { exec } = require('child_process')
 
 const Promise = require('bluebird')
 
-const rl = readline.createInterface(process.stdin, process.stdout)
-
 // Setup functions
 const createDevBranch = () =>
   new Promise((resolve, reject) => {
@@ -22,6 +20,7 @@ const createDevBranch = () =>
 const questionStorybook = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
+    const rl = readline.createInterface(process.stdin, process.stdout)
     rl.question('Would you like to use storybook?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
         exec('git merge --no-edit origin/storybook', (error, output) => {
@@ -44,6 +43,7 @@ const questionStorybook = stdout => {
 const questionServer = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
+    const rl = readline.createInterface(process.stdin, process.stdout)
     rl.question('Would you like to use express server with ssr?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
         exec('git merge --no-edit origin/ssr', (error, output) => {
@@ -66,12 +66,26 @@ const questionServer = stdout => {
 const mergeOnMaster = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
-    exec('git checkout master && git merge --no-edit dev && yarn', (error, output) => {
+    exec('git checkout master && git merge --no-edit dev', (error, output) => {
       if (error) {
         reject(error)
       } else {
         console.info(output)
         resolve('\n\n============== Dev branch merged on master ==============\n\n')
+      }
+    })
+  })
+}
+
+const runningYarn = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    exec('yarn', (error, output) => {
+      if (error) {
+        reject(error)
+      } else {
+        console.info(output)
+        resolve('\n\n============== Yarn executed successfully ==============\n\n')
       }
     })
   })
@@ -106,6 +120,7 @@ createDevBranch()
   .then(stdout => questionStorybook(stdout))
   .then(stdout => questionServer(stdout))
   .then(stdout => mergeOnMaster(stdout))
+  .then(stdout => runningYarn(stdout))
   .then(stdout => deleteGit(stdout))
   .then(stdout => finalMessage(stdout))
   .catch(() => deleteDevBranch())
