@@ -9,6 +9,21 @@ const moduleRules = [
   },
   {
     test: /\.css$/,
+    include: /node_modules/,
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: false,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
+        },
+      },
+    ],
+  },
+  {
+    test: /\.css$/,
+    exclude: /node_modules/,
     use: [
       'style-loader',
       {
