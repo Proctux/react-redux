@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require('webpack') // eslint-disable-line import/no-extraneous-dependencies
 const autoprefixer = require('autoprefixer')
 const postCSSImport = require('postcss-import')
 const postCSSNested = require('postcss-nested')

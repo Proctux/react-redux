@@ -1,5 +1,5 @@
 /* eslint-disable */
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const resolve = require('./_resolve.js')
 
 const moduleRules = [
@@ -11,38 +11,34 @@ const moduleRules = [
   {
     test: /\.css$/,
     include: /node_modules/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: false,
-            localIdentName: '[name]__[local]___[hash:base64:5]',
-          },
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: false,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
         },
-      ],
-    }),
+      },
+    ],
   },
   {
     test: /\.css$/,
     exclude: /node_modules/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 2,
-            localIdentName: '[name]__[local]___[hash:base64:5]',
-          },
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          importLoaders: 2,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
         },
-        {
-          loader: 'postcss-loader',
-        },
-      ],
-    }),
+      },
+      {
+        loader: 'postcss-loader',
+      },
+    ],
   },
   {
     test: /\.(jpe?g|png|ico|gif|otf)$/i,
@@ -63,7 +59,20 @@ const moduleRules = [
 ]
 
 module.exports = config => {
-  config.plugins.push(new ExtractTextPlugin('[name].[chunkhash].css'))
+  config.plugins[3] = new MiniCssExtractPlugin({
+    filename: '[name].[hash].css',
+    chunkFilename: '[id].[hash].css',
+  })
+
+  config.optimization.splitChunks.cacheGroups = {
+    styles: {
+      name: 'styles',
+      test: /\.css$/,
+      chunks: 'all',
+      enforce: true,
+    },
+  }
+
   config.module.rules = moduleRules
   config.resolve = resolve
 }
