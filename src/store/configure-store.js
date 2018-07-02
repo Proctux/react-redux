@@ -5,9 +5,10 @@ import logger from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension' // eslint-disable-line import/no-extraneous-dependencies
 
 import rootReducer from '_modules/reducers'
+import errorMiddleware from '_middlewares/error'
 
 const configureStore = preloadedState => {
-  const middlewares = [thunk, promise()]
+  const middlewares = [thunk, promise(), errorMiddleware]
   if (process.env.NODE_ENV === 'development') {
     return createStore(
       rootReducer,
