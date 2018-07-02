@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.1.1",
+    "axios": "^0.18.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
     "proxyquire": "^2.0.1",
