@@ -87,7 +87,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.2.0",
     "mini-css-extract-plugin": "^0.4.1",
-    "postcss-css-variables": "^0.8.1",
     "postcss-custom-media": "^6.0.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",

@@ -6,11 +6,10 @@ Files starting with `_` indicates that this files shouldn't be used directly on 
 
 ### Folder structure
 
-* styles
+- styles
 
-  * settings.css
-  * \_colors.css
-  * \_reset.css
-  * \_grid.css
-  * \_font-weights.css
-  * ...
+  - settings.css
+  - reset.css
+  - \_colors.css
+  - \_font-weights.css
+  - ...

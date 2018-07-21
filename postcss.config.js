@@ -3,7 +3,6 @@ const autoprefixer = require('autoprefixer')
 const postCSSImport = require('postcss-import')
 const postCSSNested = require('postcss-nested')
 const postCSSCustomMedia = require('postcss-custom-media')
-const postCssCssVariables = require('postcss-css-variables')()
 
 const media = require('./src/config/media-queries.js')
 
@@ -23,11 +22,5 @@ const postCSSCustomMediaConfig = postCSSCustomMedia({
 })
 
 module.exports = {
-  plugins: [
-    postCssImport,
-    postCSSAutoprefixer,
-    postCSSNested,
-    postCssCssVariables,
-    postCSSCustomMediaConfig,
-  ],
+  plugins: [postCssImport, postCSSAutoprefixer, postCSSNested, postCSSCustomMediaConfig],
 }
