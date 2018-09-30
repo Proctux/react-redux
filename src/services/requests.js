@@ -12,12 +12,13 @@ const returnData = response => response.data
 const handleResponseError = error => new Promise((resolve, reject) => reject(error.response.data))
 
 const parseParams = (url, config, data) => fn => {
+  const { removeTrailingSlash, ...configParams } = config
   if (fn === instance.delete || fn === instance.get) {
-    return fn(parseURL(url), parseConfig(config))
+    return fn(parseURL(url, removeTrailingSlash), parseConfig(configParams))
       .then(returnData)
       .catch(handleResponseError)
   }
-  return fn(parseURL(url), data, parseConfig(config))
+  return fn(parseURL(url, removeTrailingSlash), data, parseConfig(configParams))
     .then(returnData)
     .catch(handleResponseError)
 }
