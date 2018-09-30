@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux'
 
-const rootReducer = combineReducers({})
+import car from './car/reducer'
+
+const rootReducer = combineReducers({
+  car,
+})
 
 export default rootReducer
