@@ -15,7 +15,7 @@
     "verbose": true,
     "moduleNameMapper": {
       "^.+\\.(css)$": "identity-obj-proxy",
-      "^.+\\.(png|svg|txt|ico)$": "<rootDir>/tests/empty-module.js",
+      "^.+\\.(png|jpg|jpeg|svg|txt|ico)$": "<rootDir>/tests/empty-module.js",
       "^_modules/(.*)": "<rootDir>/src/modules/$1",
       "^_components/(.*)": "<rootDir>/src/components/$1",
       "^_config/(.*)": "<rootDir>/src/config/$1",
