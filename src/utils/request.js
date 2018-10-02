@@ -1,12 +1,14 @@
 const DEFAULT_AUTHORIZATION_KEYWORD = 'Token '
 const DEFAULT_AUTHORIZATION_HEADER = 'Authorization'
 
-const ensureTrailingAndLeadingSlash = url => `/${url}/`.replace(/\/\//g, '/')
-export const parseURL = url => {
+const ensureTrailingAndLeadingSlash = (url, removeTrailingSlash) =>
+  `/${url}${removeTrailingSlash ? '' : '/'}`.replace(/\/\//g, '/')
+
+export const parseURL = (url, removeTrailingSlash = true) => {
   if (Array.isArray(url)) {
-    return ensureTrailingAndLeadingSlash(url.join('/'))
+    return ensureTrailingAndLeadingSlash(url.join('/'), removeTrailingSlash)
   }
-  return ensureTrailingAndLeadingSlash(url)
+  return ensureTrailingAndLeadingSlash(url, removeTrailingSlash)
 }
 
 export const parseConfig = ({ key, ...config } = {}) => {

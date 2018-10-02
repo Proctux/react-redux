@@ -8,8 +8,7 @@ import Router from './router'
 
 const root = () => {
   const initialState = {}
-  // eslint-disable-next-line no-underscore-dangle
-  const store = configureStore(window.__INITIAL_STATE__ || initialState)
+  const store = configureStore(initialState)
   render(
     <Provider store={store}>
       <Router />
