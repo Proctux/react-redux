@@ -1,6 +1,7 @@
 module.exports = api => {
   const isDevelopment = api.env('development')
   const isProduction = api.env('production')
+  const isTest = api.env('test')
 
   const plugins = [
     '@babel/plugin-proposal-class-properties',
@@ -15,7 +16,14 @@ module.exports = api => {
   return {
     plugins,
     presets: [
-      ['@babel/preset-env', { modules: false, useBuiltIns: 'entry' }],
+      [
+        '@babel/preset-env',
+        {
+          targets: isTest ? { node: 'current' } : {},
+          modules: isTest ? 'commonjs' : false,
+          useBuiltIns: 'entry',
+        },
+      ],
       ['@babel/preset-react', { development: isDevelopment }],
     ],
   }
