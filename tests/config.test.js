@@ -1,5 +1,5 @@
 import { shallow, render, mount } from 'enzyme'
-import 'babel-polyfill'
+import '@babel/polyfill'
 import 'raf-polyfill'
 
 global.shallow = shallow
