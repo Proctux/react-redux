@@ -1,6 +1,4 @@
 module.exports = api => {
-  api.cache.using(() => process.env.NODE_ENV)
-
   const isDevelopment = api.env('development')
   const isProduction = api.env('production')
 
