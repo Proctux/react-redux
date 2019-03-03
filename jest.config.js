@@ -24,6 +24,5 @@ module.exports = {
     './private-dependencies',
     '<rootDir>[/\\\\](dist|dist-server|node_modules|.storybook)[/\\\\]',
   ],
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
   verbose: true,
 }
