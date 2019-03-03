@@ -1,5 +1,4 @@
 module.exports = {
-  moduleFileExtensions: ['js'],
   moduleNameMapper: {
     '^.+\\.(css)$': 'identity-obj-proxy',
     '^.+\\.(png|jpg|jpeg|svg|txt|ico)$': '<rootDir>/tests/empty-module.js',
