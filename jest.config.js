@@ -19,7 +19,7 @@ module.exports = {
     '\\.worker.js': '<rootDir>/tests/__mocks__/workerMock.js',
     '^_privateDependencies/(.*)': '<rootDir>/private-dependencies/$1',
   },
-  setupFiles: ['./tests/setup.js'],
+  setupFilesAfterEnv: ['./tests/setup.js'],
   testPathIgnorePatterns: [
     './tests/config.test.js',
     './private-dependencies',
