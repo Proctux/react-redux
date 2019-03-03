@@ -19,7 +19,6 @@ module.exports = api => {
       [
         '@babel/preset-env',
         {
-          targets: isTest ? { node: 'current' } : {},
           modules: isTest ? 'commonjs' : false,
           useBuiltIns: 'entry',
         },
