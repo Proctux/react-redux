@@ -55,6 +55,7 @@
           "**/*.test.js",
           "server.js",
           "postcss.config.js",
+          "tests/setup.js",
           "webpack/webpack.config.*"
         ]
       }
