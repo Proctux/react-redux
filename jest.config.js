@@ -20,7 +20,6 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./tests/setup.js'],
   testPathIgnorePatterns: [
-    './tests/config.test.js',
     './private-dependencies',
     '<rootDir>[/\\\\](dist|dist-server|node_modules|.storybook)[/\\\\]',
   ],
