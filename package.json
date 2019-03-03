@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "build": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config build",
-    "test": "yarn lint && NODE_ENV=test yarn jest",
-    "lint": "yarn eslint && yarn stylelint",
+    "eject": "react-scripts eject",
     "eslint": "NODE_ENV=test eslint src tests *.js",
+    "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "NODE_ENV=test stylelint 'src/**/*.css'",
-    "eject": "react-scripts eject"
+    "lint": "yarn eslint && yarn stylelint",
+    "test": "yarn lint && NODE_ENV=test yarn jest"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
