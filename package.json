@@ -9,7 +9,7 @@
     "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "NODE_ENV=test stylelint 'src/**/*.css'",
     "lint": "yarn run eslint && yarn run stylelint",
-    "test": "yarn run lint && NODE_ENV=test yarn jest"
+    "test": "yarn run lint && NODE_ENV=test jest"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
