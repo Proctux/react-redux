@@ -19,9 +19,6 @@ module.exports = {
     '^_privateDependencies/(.*)': '<rootDir>/private-dependencies/$1',
   },
   setupFilesAfterEnv: ['./tests/setup.js'],
-  testPathIgnorePatterns: [
-    './private-dependencies',
-    '<rootDir>[/\\\\](dist|dist-server|node_modules|.storybook)[/\\\\]',
-  ],
+  testPathIgnorePatterns: ['./private-dependencies', '<rootDir>[/\\\\](dist|dist-server|node_modules|.storybook)[/\\\\]'],
   verbose: true,
 }
