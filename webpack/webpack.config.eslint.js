@@ -46,7 +46,6 @@ module.exports = {
             loader: 'svg-sprite-loader',
             options: {
               symbolId: '[name]_[hash]',
-              runtimeCompat: true,
             },
           },
         ],

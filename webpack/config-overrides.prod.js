@@ -51,7 +51,6 @@ const moduleRules = [
         loader: 'svg-sprite-loader',
         options: {
           symbolId: '[name]_[hash]',
-          runtimeCompat: true,
         },
       },
     ],
