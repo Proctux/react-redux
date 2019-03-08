@@ -6,7 +6,7 @@ const postCSSCustomMedia = require('postcss-custom-media')
 
 const media = require('./src/config/media-queries.js')
 
-const postCSSAutoprefixer = autoprefixer({ browsers: ['IE 9', 'iOS 7'] })
+const postCSSAutoprefixer = autoprefixer()
 
 const postCssImport = postCSSImport({
   addDependencyTo: webpack,
