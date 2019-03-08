@@ -15,16 +15,13 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "semi": ["error", "never"],
+    "arrow-parens": ["error", "as-needed"],
     "no-console": [
       "error",
       {
         "allow": ["warn", "info", "error"]
       }
     ],
-    "arrow-parens": ["error", "as-needed"],
-    "import/named": "error",
-    "import/prefer-default-export": "off",
     "no-multiple-empty-lines": [
       "error",
       {
@@ -33,13 +30,9 @@
         "maxBOF": 0
       }
     ],
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always"
-      }
-    ],
+    "semi": ["error", "never"],
+
+    "import/named": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -54,15 +47,25 @@
         ]
       }
     ],
-    "react/jsx-filename-extension": "off",
-    "react/jsx-no-bind": [
-      1,
+    "import/order": [
+      "error",
       {
-        "ignoreRefs": false,
-        "allowArrowFunctions": false,
-        "allowBind": true
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
       }
     ],
+    "import/prefer-default-export": "off",
+
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/href-no-hash": 0,
+
     "prettier/prettier": [
       "error",
       {
@@ -75,13 +78,14 @@
         "printWidth": 100
       }
     ],
-    "jsx-a11y/href-no-hash": 0,
-    "jsx-a11y/anchor-is-valid": [
-      "error",
+
+    "react/jsx-filename-extension": "off",
+    "react/jsx-no-bind": [
+      1,
       {
-        "components": ["Link"],
-        "specialLink": ["to"],
-        "aspects": ["noHref", "invalidHref", "preferButton"]
+        "ignoreRefs": false,
+        "allowArrowFunctions": false,
+        "allowBind": true
       }
     ]
   }
