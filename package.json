@@ -18,7 +18,7 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "humps": "^2.0.1",
-    "immutable": "^3.8.2",
+    "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.6.2",
     "proxyquire": "^2.0.1",
     "react": "^16.4.1",
