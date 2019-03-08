@@ -1,4 +1,5 @@
 /* eslint-disable */
+// SOURCE: https://daveceddia.com/customize-create-react-app-webpack-without-ejecting/
 /*
   This module runs the scripts from react-scripts (Create React App)
   and gives an opportunity to override the Webpack config by creating
@@ -46,17 +47,11 @@ const rewireModule = (modulePath, customizer) => {
 switch (process.argv[2]) {
   // The "start" script is run during development mode
   case 'start':
-    rewireModule(
-      'react-scripts/scripts/start.js',
-      loadCustomizer('../webpack/config-overrides.dev')
-    )
+    rewireModule('react-scripts/scripts/start.js', loadCustomizer('../webpack/config-overrides.dev'))
     break
   // The "build" script is run to produce a production bundle
   case 'build':
-    rewireModule(
-      'react-scripts/scripts/build.js',
-      loadCustomizer('../webpack/config-overrides.prod')
-    )
+    rewireModule('react-scripts/scripts/build.js', loadCustomizer('../webpack/config-overrides.prod'))
     break
   default:
     console.log('customized-config only supports "start" and "build" options.')
