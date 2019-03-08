@@ -44,7 +44,7 @@
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "css-loader": "^0.28.11",
+    "css-loader": "^2.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.0.1",
