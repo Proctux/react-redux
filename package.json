@@ -20,7 +20,6 @@
     "humps": "^2.0.1",
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.6.2",
-    "proxyquire": "^2.0.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-redux": "^6.0.0",
