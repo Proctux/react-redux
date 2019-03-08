@@ -8,7 +8,7 @@ import rootReducer from '_modules/reducers'
 import errorMiddleware from '_middlewares/error'
 
 const configureStore = preloadedState => {
-  const middlewares = [thunk, promise(), errorMiddleware]
+  const middlewares = [thunk, promise, errorMiddleware]
   if (process.env.NODE_ENV === 'development') {
     return createStore(
       rootReducer,
