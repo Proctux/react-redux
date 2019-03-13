@@ -8,7 +8,7 @@
     "eslint": "NODE_ENV=test eslint src tests *.js",
     "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "NODE_ENV=test stylelint 'src/**/*.css'",
-    "lint": "yarn run eslint && yarn run stylelint",
+    "lint": "yarn eslint && yarn stylelint",
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
