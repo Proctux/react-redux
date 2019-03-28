@@ -19,13 +19,15 @@
   },
   "plugins": [
     "react",
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   "rules": {
     "arrow-parens": [
       "error",
       "as-needed"
     ],
+    "class-methods-use-this": "error",
     "no-console": [
       "error",
       {
@@ -113,6 +115,14 @@
         "allowArrowFunctions": false,
         "allowBind": true
       }
-    ]
+    ],
+    "react/prefer-stateless-function": [
+      2,
+      {
+        "ignorePureComponents": false
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
