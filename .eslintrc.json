@@ -1,6 +1,10 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -13,13 +17,23 @@
       }
     }
   },
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
     "no-console": [
       "error",
       {
-        "allow": ["warn", "info", "error"]
+        "allow": [
+          "warn",
+          "info",
+          "error"
+        ]
       }
     ],
     "no-multiple-empty-lines": [
@@ -30,8 +44,10 @@
         "maxBOF": 0
       }
     ],
-    "semi": ["error", "never"],
-
+    "semi": [
+      "error",
+      "never"
+    ],
     "import/named": "error",
     "import/no-extraneous-dependencies": [
       "error",
@@ -50,22 +66,35 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
         "newlines-between": "always"
       }
     ],
     "import/prefer-default-export": "off",
-
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": ["Link"],
-        "specialLink": ["to"],
-        "aspects": ["noHref", "invalidHref", "preferButton"]
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "to"
+        ],
+        "aspects": [
+          "noHref",
+          "invalidHref",
+          "preferButton"
+        ]
       }
     ],
     "jsx-a11y/href-no-hash": 0,
-
     "prettier/prettier": [
       "error",
       {
@@ -75,7 +104,6 @@
         "trailingComma": "es5"
       }
     ],
-
     "react/destructuring-assignment": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-no-bind": [
