@@ -3,9 +3,10 @@ module.exports = api => {
   const isProduction = api.env('production')
   const isTest = api.env('test')
 
-  const plugins = ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-react-inline-elements', '@babel/plugin-transform-runtime']
+  const plugins = ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
 
   if (isProduction) {
+    plugins.push('@babel/plugin-transform-react-inline-elements')
     plugins.push('transform-react-remove-prop-types')
   }
 
