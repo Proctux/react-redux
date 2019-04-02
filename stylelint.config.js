@@ -1,6 +1,8 @@
 module.exports = {
   extends: 'stylelint-config-standard',
   rules: {
+    'declaration-colon-newline-after': null,
+    'number-leading-zero': null,
     'property-no-unknown': [
       true,
       {
@@ -13,7 +15,5 @@ module.exports = {
         ignorePseudoClasses: ['global'],
       },
     ],
-    'number-leading-zero': null,
-    'declaration-colon-newline-after': null,
   },
 }

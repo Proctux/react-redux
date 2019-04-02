@@ -1,10 +1,10 @@
-import { shallow, render, mount } from 'enzyme'
-import 'babel-polyfill'
+import '@babel/polyfill'
 import 'raf-polyfill'
 
-global.shallow = shallow
-global.render = render
-global.mount = mount
+import Enzyme from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 // Fail tests on any console error
 console.error = message => {

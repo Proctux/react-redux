@@ -8,7 +8,7 @@ const Model = defaultValues =>
     constructor(props) {
       const camelizedProps = Humps.camelizeKeys({ ...props })
       const sanitizedProps = Object.keys(camelizedProps).reduce((newProps, key) => {
-        if (camelizedProps[key]) {
+        if (key in camelizedProps) {
           return { ...newProps, [key]: camelizedProps[key] }
         }
 
@@ -20,13 +20,12 @@ const Model = defaultValues =>
 
     sanitizeProps(props) {
       const camelizedProps = Humps.camelizeKeys({ ...props })
-      return this.keySeq().reduce((newProps, key) => {
-        if (camelizedProps[key]) {
-          return { ...newProps, [key]: camelizedProps[key] }
-        }
-
-        return newProps
-      }, {})
+      return this.toSeq()
+        .keySeq()
+        .reduce((newProps, key) => {
+          const value = camelizedProps[key]
+          return value ? { ...newProps, [key]: value } : newProps
+        }, {})
     }
 
     mergeProps(props) {

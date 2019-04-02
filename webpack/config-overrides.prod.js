@@ -51,7 +51,6 @@ const moduleRules = [
         loader: 'svg-sprite-loader',
         options: {
           symbolId: '[name]_[hash]',
-          runtimeCompat: true,
         },
       },
     ],
@@ -59,7 +58,7 @@ const moduleRules = [
 ]
 
 module.exports = config => {
-  config.plugins[3] = new MiniCssExtractPlugin({
+  config.plugins[5] = new MiniCssExtractPlugin({
     filename: '[name].[hash].css',
     chunkFilename: '[id].[hash].css',
   })
