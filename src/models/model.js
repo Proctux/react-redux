@@ -8,7 +8,7 @@ const Model = defaultValues =>
     constructor(props) {
       const camelizedProps = Humps.camelizeKeys({ ...props })
       const sanitizedProps = Object.keys(camelizedProps).reduce((newProps, key) => {
-        if (camelizedProps[key]) {
+        if (key in camelizedProps) {
           return { ...newProps, [key]: camelizedProps[key] }
         }
 
