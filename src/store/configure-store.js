@@ -10,7 +10,11 @@ import errorMiddleware from '_middlewares/error'
 const configureStore = preloadedState => {
   const middlewares = [thunk, promise, errorMiddleware]
   if (process.env.NODE_ENV === 'development') {
-    return createStore(rootReducer, preloadedState, composeWithDevTools(applyMiddleware(...middlewares, logger)))
+    return createStore(
+      rootReducer,
+      preloadedState,
+      composeWithDevTools(applyMiddleware(...middlewares, logger))
+    )
   }
   return createStore(rootReducer, preloadedState, applyMiddleware(...middlewares))
 }

@@ -6,7 +6,8 @@ export const INITIAL_STATE = new Map()
 
 const isPending = actionType => actionType.toString().includes('PENDING')
 
-const isResponse = actionType => actionType.toString().includes('FULFILLED') || actionType.toString().includes('REJECTED')
+const isResponse = actionType =>
+  actionType.toString().includes('FULFILLED') || actionType.toString().includes('REJECTED')
 
 export default (state = INITIAL_STATE, action) => {
   const actionName = getActionName(action.type)
