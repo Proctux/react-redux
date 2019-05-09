@@ -2,8 +2,6 @@
 const readline = require('readline')
 const { exec } = require('child_process')
 
-const Promise = require('bluebird')
-
 // Setup functions
 const createDevBranch = () =>
   new Promise((resolve, reject) => {
