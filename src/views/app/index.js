@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -16,37 +16,34 @@ const mapDispatchToProps = {
   getPerfectBMW,
 }
 
-class App extends PureComponent {
-  static propTypes = {
-    getPerfectBMW: PropTypes.func.isRequired,
-    car: PropTypes.instanceOf(Car).isRequired,
-  }
+const App = ({ car, getPerfectBMW: dispatchGetPerfectBMW }) => {
+  useEffect(() => {
+    dispatchGetPerfectBMW()
+  }, [dispatchGetPerfectBMW])
 
-  componentDidMount() {
-    this.props.getPerfectBMW()
-  }
+  return (
+    <div className={styles.App}>
+      <header className={styles['App-header']}>
+        <img src={BMW} alt="BMW" className={styles['App-logo']} />
+        <h1 className={styles['App-title']}>Jungle Devs Boilerplate</h1>
+      </header>
+      {car.marca ? (
+        <p className={styles['App-intro']}>{`The ${car.marca} ${car.modelo} ${car.anoModelo} - ${
+          car.combustivel
+        } (FIPE ${car.codigoFipe}) was evaluated at ${car.valor}`}</p>
+      ) : (
+        <p className={styles['App-intro']}>Loading...</p>
+      )}
+    </div>
+  )
+}
 
-  render() {
-    const { car } = this.props
-    return (
-      <div className={styles.App}>
-        <header className={styles['App-header']}>
-          <img src={BMW} alt="BMW" className={styles['App-logo']} />
-          <h1 className={styles['App-title']}>Jungle Devs Boilerplate</h1>
-        </header>
-        {car.marca ? (
-          <p className={styles['App-intro']}>{`The ${car.marca} ${car.modelo} ${car.anoModelo} - ${
-            car.combustivel
-          } (FIPE ${car.codigoFipe}) was evaluated at ${car.valor}`}</p>
-        ) : (
-          <p className={styles['App-intro']}>Loading...</p>
-        )}
-      </div>
-    )
-  }
+App.propTypes = {
+  car: PropTypes.instanceOf(Car).isRequired,
+  getPerfectBMW: PropTypes.func.isRequired,
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)(React.memo(App))
