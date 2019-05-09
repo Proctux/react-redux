@@ -6,6 +6,7 @@
     "build": "GENERATE_SOURCEMAP=false SKIP_PREFLIGHT_CHECK=true node scripts/customized-config build",
     "eject": "react-scripts eject",
     "eslint": "NODE_ENV=test eslint src tests *.js",
+    "eslint-fix": "NODE_ENV=test eslint --fix src tests *.js",
     "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "NODE_ENV=test stylelint 'src/**/*.css'",
     "lint": "yarn eslint && yarn stylelint",
