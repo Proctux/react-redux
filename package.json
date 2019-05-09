@@ -64,7 +64,7 @@
     "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.0.0",
-    "prettier": "^1.13.7",
+    "prettier": "^1.17.0",
     "raf-polyfill": "^1.0.0",
     "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.5",
