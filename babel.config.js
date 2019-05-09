@@ -3,7 +3,10 @@ module.exports = api => {
   const isProduction = api.env('production')
   const isTest = api.env('test')
 
-  const plugins = ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
+  const plugins = [
+    '@babel/plugin-proposal-class-properties',
+    ['@babel/plugin-transform-runtime', { corejs: 3 }],
+  ]
 
   if (isProduction) {
     plugins.push('@babel/plugin-transform-react-inline-elements')
@@ -16,6 +19,7 @@ module.exports = api => {
       [
         '@babel/preset-env',
         {
+          corejs: 3,
           modules: isTest ? 'commonjs' : false,
           useBuiltIns: 'entry',
         },
