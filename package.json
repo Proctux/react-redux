@@ -10,7 +10,7 @@
     "lint": "yarn eslint && yarn stylelint",
     "start": "SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "NODE_ENV=test stylelint 'src/**/*.css'",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --passWithNoTests"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.4.4",
