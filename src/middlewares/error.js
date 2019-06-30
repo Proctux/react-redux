@@ -1,10 +1,8 @@
-import isPromise from '_utils/is-promise'
-
 export default function errorMiddleware() {
   return next => action => {
     const result = next(action)
 
-    if (!isPromise(result)) {
+    if (!(result instanceof Promise)) {
       return action
     }
 
