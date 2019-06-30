@@ -68,6 +68,7 @@
     "postcss-nested": "^4.0.0",
     "prettier": "^1.17.0",
     "raf-polyfill": "^1.0.0",
+    "react-hooks-testing-library": "^0.6.0",
     "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.5",
     "style-loader": "^0.23.0",
