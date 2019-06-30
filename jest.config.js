@@ -13,6 +13,7 @@ module.exports = {
     '^_styles/(.*)': '<rootDir>/src/styles/$1',
     '^_store/(.*)': '<rootDir>/src/store/$1',
     '^_hocs/(.*)': '<rootDir>/src/hocs/$1',
+    '^_hooks/(.*)': '<rootDir>/src/hooks/$1',
     '^_middlewares/(.*)': '<rootDir>/src/middlewares/$1',
     '^_assets/(.*)': '<rootDir>/src/assets/$1',
     '\\.worker.js': '<rootDir>/tests/__mocks__/workerMock.js',
