@@ -10,4 +10,4 @@ export const createReducer = (initialState, handlers) => (state = initialState, 
 }
 
 export const getActionName = name =>
-  name.toString().replace(/_PENDING$|_REJECTED$|_FULFILLED$|_COUNT/, '')
+  name.toString().replace(/_PENDING$|_REJECTED$|_FULFILLED$|_COUNT$/, '')
