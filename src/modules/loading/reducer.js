@@ -2,7 +2,7 @@ import { Map } from 'immutable'
 
 import { getActionName } from '_utils/redux'
 
-export const INITIAL_STATE = new Map()
+export const INITIAL_STATE = Map()
 
 const isPending = actionType => actionType.toString().includes('PENDING')
 

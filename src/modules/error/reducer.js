@@ -2,7 +2,7 @@ import { Map, fromJS } from 'immutable'
 
 import { getActionName } from '_utils/redux'
 
-export const INITIAL_STATE = new Map()
+export const INITIAL_STATE = Map()
 
 export default (state = INITIAL_STATE, action) => {
   if (action.error) {
