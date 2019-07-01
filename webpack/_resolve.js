@@ -16,6 +16,7 @@ module.exports = {
     _assets: path.resolve(__dirname, '..', 'src/assets/'),
     _hocs: path.resolve(__dirname, '..', 'src/hocs/'),
     _middlewares: path.resolve(__dirname, '..', 'src/middlewares/'),
+    _hooks: path.resolve(__dirname, '..', 'src/hooks/'),
     _privateDependencies: path.resolve(__dirname, '..', 'private-dependencies/'),
   },
 }

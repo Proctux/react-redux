@@ -15,6 +15,7 @@
       "_assets/*": ["src/assets/*"],
       "_hocs/*": ["src/hocs/*"],
       "_middlewares/*": ["src/middlewares/*"],
+      "_hooks/*": ["src/hooks/*"],
       "_privateDependencies/*": ["private-dependencies/*"]
     }
   },
