@@ -107,7 +107,9 @@ workflows:
               only:
                 - staging
           requires:
-            - build
+            - stylelint
+            - eslint
+            - test
       - deploy_production:
           filters:
             tags:
@@ -115,4 +117,6 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - build
+            - stylelint
+            - eslint
+            - test
