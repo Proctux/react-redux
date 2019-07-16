@@ -1,6 +1,6 @@
 import humps from 'humps'
 
-export const createFormData = (data, isDecamelized = false) => {
+export const createFormData = (data, isCamelized = false) => {
   const formData = new FormData()
 
   Object.keys(data).forEach(field => {
@@ -17,7 +17,7 @@ export const createFormData = (data, isDecamelized = false) => {
       return JSON.stringify(fieldValue)
     })()
 
-    formData.append(isDecamelized ? humps.decamelize(field) : field, formDataValue)
+    formData.append(isCamelized ? field : humps.decamelize(field), formDataValue)
   })
 
   return formData
