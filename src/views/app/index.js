@@ -1,25 +1,18 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import BMW from '_assets/images/bmw328i.jpg'
 import { getPerfectBMW } from '_modules/car/actions'
-import { Car } from '_models'
 
 import styles from './styles.css'
 
-const mapStateToProps = ({ car }) => ({
-  car,
-})
+const App = () => {
+  const car = useSelector(state => state.car)
+  const dispatch = useDispatch()
 
-const mapDispatchToProps = {
-  getPerfectBMW,
-}
-
-const App = ({ car, getPerfectBMW: dispatchGetPerfectBMW }) => {
   useEffect(() => {
-    dispatchGetPerfectBMW()
-  }, [dispatchGetPerfectBMW])
+    dispatch(getPerfectBMW())
+  }, [dispatch])
 
   return (
     <div className={styles.App}>
@@ -38,12 +31,4 @@ const App = ({ car, getPerfectBMW: dispatchGetPerfectBMW }) => {
   )
 }
 
-App.propTypes = {
-  car: PropTypes.instanceOf(Car).isRequired,
-  getPerfectBMW: PropTypes.func.isRequired,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(React.memo(App))
+export default React.memo(App)
