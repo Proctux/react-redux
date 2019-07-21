@@ -17,7 +17,7 @@ const handleResponseError = error => new Promise((resolve, reject) => reject(err
 
 // decamelize keys for the API
 const decamelizePayload = data =>
-  data instanceof FormData ? createFormData(data, true) : humps.decamelizeKeys(data)
+  data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
 
 // Check if should be decamelized or not
 const parsePayload = (data, transformPayload) => (transformPayload ? decamelizePayload(data) : data)
