@@ -6,6 +6,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
 import './bootstrap'
+import './i18n'
 import configureStore from './store/configure-store'
 import Router from './router'
 
