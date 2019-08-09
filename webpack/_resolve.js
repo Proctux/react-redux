@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   modules: [path.join(__dirname, '..', 'src'), path.join(__dirname, '..', 'node_modules')],
-  extensions: ['.js'],
+  extensions: ['.js', '.jsx'],
   alias: {
     _modules: path.resolve(__dirname, '..', 'src/modules/'),
     _components: path.resolve(__dirname, '..', 'src/components/'),

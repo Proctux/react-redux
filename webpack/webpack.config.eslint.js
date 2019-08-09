@@ -3,7 +3,7 @@ const path = require('path')
 const resolve = require('./_resolve.js')
 
 module.exports = {
-  entry: ['../src/index'],
+  entry: ['../src/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -14,7 +14,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js|.jsx$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },

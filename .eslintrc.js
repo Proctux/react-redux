@@ -13,6 +13,9 @@ module.exports = {
       webpack: {
         config: './webpack/webpack.config.eslint.js',
       },
+      'babel-module': {
+        extensions: ['.js', '.jsx'],
+      },
     },
   },
   plugins: ['react', 'prettier', 'react-hooks'],
