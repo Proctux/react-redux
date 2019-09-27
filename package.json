@@ -5,8 +5,8 @@
   "scripts": {
     "build": "cross-env GENERATE_SOURCEMAP=false SKIP_PREFLIGHT_CHECK=true node scripts/customized-config build",
     "eject": "react-scripts eject",
-    "eslint": "cross-env NODE_ENV=test eslint src tests *.js",
-    "eslint-fix": "cross-env NODE_ENV=test eslint --fix src tests *.js",
+    "eslint": "cross-env NODE_ENV=test eslint src tests --ext js --ext jsx",
+    "eslint-fix": "cross-env NODE_ENV=test eslint --fix src tests --ext js --ext jsx",
     "lint": "yarn eslint && yarn stylelint",
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "cross-env NODE_ENV=test stylelint 'src/**/*.css'",
