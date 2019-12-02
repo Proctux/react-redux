@@ -40,6 +40,11 @@ This boilerplate was made on top of [Facebook's Create React App (CRA)](https://
 
 In order to customize the webpack, a script was added to listen and modify the original webpack configuration files. This is possible due to the library [Rewire](https://github.com/jhnns/rewire). The file responsible for this is located [here](scripts/customized-config.js)
 
+### NVM
+
+The _.nvmrc_ file helps us to run the project with the correct node version.
+If you are not familiar with NVM usage, you can check it [here](https://coda.io/d/Chapter-Frontend_dPmePxjVB5S/Style-Guide_su751#_luWDD)
+
 ### Used Libraries
 
 #### React
