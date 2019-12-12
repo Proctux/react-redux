@@ -5,7 +5,7 @@ It uses React 16 + Redux + Reach Router.
 
 ## Requirements
 
-- Node v8.11.3 installed
+- Node v12.13.1 installed
 - [Yarn Package Manager](https://yarnpkg.com/lang/en/)
 
 ## Options Available

@@ -1,5 +1,7 @@
 # Production files
 build
+dist
+dist-server
 
 # =======================================================================
 # Created by https://www.gitignore.io/api/node,macos,visualstudiocode
