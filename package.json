@@ -10,7 +10,12 @@
     "lint": "yarn eslint && yarn stylelint",
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true node scripts/customized-config start",
     "stylelint": "cross-env NODE_ENV=test stylelint 'src/**/*.css'",
-    "test": "cross-env NODE_ENV=test jest --passWithNoTests"
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests",
+    "preinstall": "cross-env node bin/check-nvmrc.js",
+    "prestart": "cross-env node bin/check-nvmrc.js"
+  },
+  "resolutions": {
+    "**/fsevents": "^1.2.9"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.4.4",
