@@ -2,6 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "baseUrl": "./",
+    "jsx": "react",
     "paths": {
       "_modules/*": ["src/modules/*"],
       "_components/*": ["src/components/*"],
