@@ -13,7 +13,10 @@ const instance = axios.create({
 const returnData = transformPayload => response =>
   transformPayload ? humps.camelizeKeys(response.data) : response.data
 
-const handleResponseError = error => new Promise((resolve, reject) => reject(error.response.data))
+const handleResponseError = error =>
+  new Promise((resolve, reject) =>
+    error && error.response ? reject(error.response.data) : reject()
+  )
 
 // decamelize keys for the API
 const decamelizePayload = data =>
