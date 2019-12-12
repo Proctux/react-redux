@@ -14,9 +14,6 @@
     "preinstall": "node bin/check-nvmrc.js",
     "prestart": "node bin/check-nvmrc.js"
   },
-  "resolutions": {
-    "**/fsevents": "^1.2.9"
-  },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.4.4",
     "@reach/router": "^1.1.1",
