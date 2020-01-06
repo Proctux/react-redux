@@ -3,7 +3,7 @@ const resolve = require('./_resolve.js')
 
 const moduleRules = [
   {
-    test: /\.js|.jsx$/,
+    test: /\.js$|.jsx$/,
     loader: 'babel-loader',
     exclude: /node_modules/,
   },
