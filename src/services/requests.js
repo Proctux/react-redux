@@ -11,7 +11,7 @@ const instance = axios.create({
 })
 
 const returnData = transformPayload => response =>
-  transformPayload ? humps.camelizeKeys(response.data) : response.data
+  transformPayload === false ? response.data : humps.camelizeKeys(response.data)
 
 const handleResponseError = error =>
   new Promise((resolve, reject) =>
