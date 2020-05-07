@@ -10,11 +10,10 @@ const instance = axios.create({
   headers: { 'Content-type': 'application/json; charset=UTF-8' },
 })
 
-const returnData = (transformPayload, transformOnlyResponse, transformOnlyRequest) => response => {
-  return (transformPayload || transformOnlyResponse) && !transformOnlyRequest
+const returnData = (transformPayload, transformOnlyResponse, transformOnlyRequest) => response =>
+  (transformPayload || transformOnlyResponse) && !transformOnlyRequest
     ? humps.camelizeKeys(response.data)
     : response.data
-}
 
 const handleResponseError = error =>
   new Promise((resolve, reject) =>
@@ -22,16 +21,14 @@ const handleResponseError = error =>
   )
 
 // decamelize keys for the API
-const decamelizePayload = data => {
-  return data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
-}
+const decamelizePayload = data =>
+  data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
 
 // Check if should be decamelized or not
-const parsePayload = (data, transformPayload, transformOnlyResponse, transformOnlyRequest) => {
-  return (transformPayload || transformOnlyRequest) && !transformOnlyResponse
+const parsePayload = (data, transformPayload, transformOnlyResponse, transformOnlyRequest) =>
+  (transformPayload || transformOnlyRequest) && !transformOnlyResponse
     ? decamelizePayload(data, transformOnlyRequest)
     : data
-}
 
 const parseParams = (url, config, data) => fn => {
   const {
