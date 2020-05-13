@@ -10,10 +10,14 @@ const instance = axios.create({
   headers: { 'Content-type': 'application/json; charset=UTF-8' },
 })
 
-const returnData = (transformPayload, transformOnlyResponse, transformOnlyRequest) => response =>
-  (transformPayload || transformOnlyResponse) && !transformOnlyRequest
-    ? humps.camelizeKeys(response.data)
-    : response.data
+const returnData = ({
+  transformPayload,
+  transformOnlyResponse,
+  transformOnlyRequest,
+}) => response => {
+  const shouldTransform = (transformPayload || transformOnlyResponse) && !transformOnlyRequest
+  return shouldTransform ? humps.camelizeKeys(response.data) : response.data
+}
 
 const handleResponseError = error =>
   new Promise((resolve, reject) =>
@@ -25,10 +29,10 @@ const decamelizePayload = data =>
   data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
 
 // Check if should be decamelized or not
-const parsePayload = (data, transformPayload, transformOnlyResponse, transformOnlyRequest) =>
-  (transformPayload || transformOnlyRequest) && !transformOnlyResponse
-    ? decamelizePayload(data, transformOnlyRequest)
-    : data
+const parsePayload = ({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }) => {
+  const shouldTransform = (transformPayload || transformOnlyRequest) && !transformOnlyResponse
+  return shouldTransform ? decamelizePayload(data, transformOnlyRequest) : data
+}
 
 const parseParams = (url, config, data) => fn => {
   const {
@@ -41,16 +45,16 @@ const parseParams = (url, config, data) => fn => {
 
   if (fn === instance.delete || fn === instance.get) {
     return fn(parseURL(url, removeTrailingSlash), parseConfig(configParams))
-      .then(returnData(transformPayload, transformOnlyResponse, transformOnlyRequest))
+      .then(returnData({ transformPayload, transformOnlyResponse, transformOnlyRequest }))
       .catch(handleResponseError)
   }
 
   return fn(
     parseURL(url, removeTrailingSlash),
-    parsePayload(data, transformPayload, transformOnlyResponse, transformOnlyRequest),
+    parsePayload({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }),
     parseConfig(configParams)
   )
-    .then(returnData(transformPayload, transformOnlyResponse, transformOnlyRequest))
+    .then(returnData({ transformPayload, transformOnlyResponse, transformOnlyRequest }))
     .catch(handleResponseError)
 }
 
