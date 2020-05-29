@@ -57,7 +57,7 @@ jobs:
       - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
       - run: yarn build
-      - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_STAGING --delete
+      - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_STAGING --delete --cache-control "public, max-age=604800"
       - run: aws cloudfront create-invalidation --paths '/*' --distribution-id $AWS_DISTRIBUTION_ID_STAGING
   deploy_production:
     <<: *defaults
@@ -72,7 +72,7 @@ jobs:
       - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
       - run: yarn build
-      - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_PRODUCTION --delete
+      - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_PRODUCTION --delete --cache-control "public, max-age=604800"
       - run: aws cloudfront create-invalidation --paths '/*' --distribution-id $AWS_DISTRIBUTION_ID_PRODUCTION
 
 workflows:
