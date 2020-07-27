@@ -7,6 +7,7 @@ module.exports = api => {
     '@babel/plugin-proposal-class-properties',
     ['@babel/plugin-transform-runtime', { corejs: 3 }],
     '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
   ]
 
   if (isProduction) {
