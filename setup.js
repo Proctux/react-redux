@@ -1,6 +1,63 @@
-/* eslint-disable */
+const fs = require('fs')
+const path = require('path')
 const readline = require('readline')
 const { exec } = require('child_process')
+const { promisify } = require('util')
+
+const writeFile = promisify(fs.writeFile)
+const readFile = promisify(fs.readFile)
+const readdir = promisify(fs.readdir)
+const stat = promisify(fs.stat)
+
+const ignorePaths = ['node_modules', '.git', '.vscode', '.gitignore', 'yarn.lock', 'setup.js']
+const stepsAnswers = { storybook: false, ssr: false }
+
+const getRegularExpression = key =>
+  new RegExp(`(// <${key}>|{/\\* <${key}> \\*/})([\\s\\S]*?)(// </${key}>|{/\\* </${key}> \\*/})`)
+
+const scanAndReplace = async (directoryName = './', results = []) => {
+  const stepsAnswersKeys = Object.keys(stepsAnswers)
+  const files = await readdir(directoryName)
+  try {
+    await Promise.all(
+      files.map(async f => {
+        if (ignorePaths.includes(f)) return
+
+        const fullPath = path.join(directoryName, f)
+        const stats = await stat(fullPath)
+        if (stats.isDirectory()) {
+          await scanAndReplace(fullPath, results)
+        } else {
+          const originalContent = await readFile(fullPath, 'utf8')
+          let newContent = originalContent
+
+          stepsAnswersKeys.forEach(key => {
+            if (getRegularExpression(key).test(newContent)) {
+              const re = getRegularExpression(key)
+
+              let match = re.exec(newContent)
+              while (match) {
+                if (stepsAnswers[key]) {
+                  newContent = newContent.replace(getRegularExpression(key), match[2])
+                } else {
+                  newContent = newContent.replace(getRegularExpression(key), '')
+                }
+                match = re.exec(newContent)
+              }
+            }
+          })
+          if (originalContent !== newContent) {
+            await writeFile(fullPath, newContent)
+          }
+          results.push(fullPath)
+        }
+      })
+    )
+  } catch (error) {
+    throw error
+  }
+  return results
+}
 
 // Setup functions
 const createDevBranch = () =>
@@ -21,13 +78,8 @@ const questionStorybook = stdout => {
     const rl = readline.createInterface(process.stdin, process.stdout)
     rl.question('Would you like to use storybook?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
-        exec('git merge --no-edit origin/storybook', (error, output) => {
-          if (error) {
-            reject(error)
-          }
-          console.info(output)
-          resolve('\n\n============== Merged storybook branch ==============\n\n')
-        })
+        stepsAnswers.storybook = true
+        resolve('\n\n=============== Storybook selected ================\n\n')
       } else if (answer === '2') {
         resolve('\n\n============== No storybook selected ==============\n\n')
       } else {
@@ -44,13 +96,8 @@ const questionServer = stdout => {
     const rl = readline.createInterface(process.stdin, process.stdout)
     rl.question('Would you like to use express server with ssr?\n1- Yes\n2- No\n', answer => {
       if (answer === '1') {
-        exec('git merge --no-edit origin/ssr', (error, output) => {
-          if (error) {
-            reject(error)
-          }
-          console.info(output)
-          resolve('\n\n============== Merged ssr branch ==============\n\n')
-        })
+        stepsAnswers.ssr = true
+        resolve('\n\n================ Expresss server with ssr selected ===============\n\n')
       } else if (answer === '2') {
         resolve('\n\n============== No expresss server with ssr selected ==============\n\n')
       } else {
@@ -58,6 +105,21 @@ const questionServer = stdout => {
       }
       rl.close()
     })
+  })
+}
+
+const modifyFiles = stdout => {
+  console.info(stdout)
+  return new Promise(async (resolve, reject) => {
+    try {
+      await scanAndReplace()
+      exec('yarn eslint-fix && cross-env NODE_ENV=test prettier --write *.js', (error, output) => {
+        console.info(output)
+        resolve('\n\n============== Files successfully modified ==============\n\n')
+      })
+    } catch (error) {
+      reject(error)
+    }
   })
 }
 
@@ -117,6 +179,7 @@ const deleteDevBranch = () => {
 createDevBranch()
   .then(stdout => questionStorybook(stdout))
   .then(stdout => questionServer(stdout))
+  .then(stdout => modifyFiles(stdout))
   .then(stdout => mergeOnMaster(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => deleteGit(stdout))
