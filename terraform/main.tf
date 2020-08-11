@@ -5,6 +5,7 @@ provider "aws" {
 
 module "s3" {
   source = "./S3"
+  project     = local.workspace.project
 }
 
 module "cloudfront" {
