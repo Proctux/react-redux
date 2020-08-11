@@ -20,10 +20,12 @@ const scanAndReplace = async (directoryName = './', results = []) => {
   const files = await readdir(directoryName)
   try {
     await Promise.all(
-      files.map(async f => {
-        if (ignorePaths.includes(f)) return
+      files.map(async file => {
+        if (ignorePaths.includes(file)) {
+          return
+        }
 
-        const fullPath = path.join(directoryName, f)
+        const fullPath = path.join(directoryName, file)
         const stats = await stat(fullPath)
         if (stats.isDirectory()) {
           await scanAndReplace(fullPath, results)
@@ -60,20 +62,7 @@ const scanAndReplace = async (directoryName = './', results = []) => {
 }
 
 // Setup functions
-const createDevBranch = () =>
-  new Promise((resolve, reject) => {
-    exec('git fetch --all && git checkout -b dev', (error, stdout) => {
-      if (error) {
-        reject(error)
-      } else {
-        console.info(stdout)
-        resolve('\n\n============== Dev branch created ==============\n\n')
-      }
-    })
-  })
-
-const questionStorybook = stdout => {
-  console.info(stdout)
+const questionStorybook = () => {
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface(process.stdin, process.stdout)
     rl.question('Would you like to use storybook?\n1- Yes\n2- No\n', answer => {
@@ -169,19 +158,18 @@ const finalMessage = stdout => {
   console.info(stdout)
 }
 
-const deleteDevBranch = () => {
-  exec('git checkout master && git branch -D dev', (error, stdout) => {
+const restoreBranch = () => {
+  exec('git fetch origin && git reset --hard origin/master', (error, stdout) => {
     console.info(stdout)
   })
 }
 
 // Execute flow
-createDevBranch()
-  .then(stdout => questionStorybook(stdout))
+questionStorybook()
   .then(stdout => questionServer(stdout))
   .then(stdout => modifyFiles(stdout))
   .then(stdout => mergeOnMaster(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => deleteGit(stdout))
   .then(stdout => finalMessage(stdout))
-  .catch(() => deleteDevBranch())
+  .catch(restoreBranch)
