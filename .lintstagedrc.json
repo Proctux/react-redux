@@ -2,7 +2,7 @@
   "*.{jsx,js}": [
     "eslint --ext js --ext jsx --fix"
   ],
-  "src/**/*.css":[
+  "src/**/*.{css,scss}":[
     "stylelint --fix"
   ]
 }
