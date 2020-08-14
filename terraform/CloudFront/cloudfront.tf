@@ -22,6 +22,8 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     response_page_path    = "/index.html"
   }
 
+  aliases = var.aliases
+
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
@@ -44,7 +46,9 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = var.certificate_arn
+    minimum_protocol_version = "TLSv1.1_2016"
+    ssl_support_method       = "sni-only"
   }
 
 }
