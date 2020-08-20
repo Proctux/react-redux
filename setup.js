@@ -112,20 +112,6 @@ const modifyFiles = stdout => {
   })
 }
 
-const mergeOnMaster = stdout => {
-  console.info(stdout)
-  return new Promise((resolve, reject) => {
-    exec('git checkout master && git merge --no-edit dev', (error, output) => {
-      if (error) {
-        reject(error)
-      } else {
-        console.info(output)
-        resolve('\n\n============== Dev branch merged on master ==============\n\n')
-      }
-    })
-  })
-}
-
 const runningYarn = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
@@ -154,6 +140,46 @@ const deleteGit = stdout => {
   })
 }
 
+const initGit = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    exec('git init', (error, output) => {
+      if (error) {
+        reject(error)
+      } else {
+        console.info(output)
+        const rl = readline.createInterface(process.stdin, process.stdout)
+        rl.question(
+          'Would you like to add a remote origin to git?\n1- Yes\n2- No\n',
+          selectedOption => {
+            rl.close()
+            if (selectedOption === '1') {
+              rl.question(
+                'Type in the origin url. e.g. https://github.com/JungleDevs/boilerplate-react.git',
+                answer => {
+                  exec(`git remote add origin ${answer}`, (gitRemoteError, gitRemoteOutput) => {
+                    console.info(gitRemoteOutput)
+                    if (gitRemoteError) {
+                      reject(gitRemoteError)
+                    } else {
+                      resolve('\n\n============== Git successfully initiated ==============\n\n')
+                    }
+                    rl.close()
+                  })
+                }
+              )
+            } else if (selectedOption === '2') {
+              resolve('\n\n============== Git successfully initiated ==============\n\n')
+            } else {
+              reject(selectedOption)
+            }
+          }
+        )
+      }
+    })
+  })
+}
+
 const finalMessage = stdout => {
   console.info(stdout)
 }
@@ -168,8 +194,8 @@ const restoreBranch = () => {
 questionStorybook()
   .then(stdout => questionServer(stdout))
   .then(stdout => modifyFiles(stdout))
-  .then(stdout => mergeOnMaster(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => deleteGit(stdout))
+  .then(stdout => initGit(stdout))
   .then(stdout => finalMessage(stdout))
   .catch(restoreBranch)
