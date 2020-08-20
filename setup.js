@@ -12,6 +12,15 @@ const stat = promisify(fs.stat)
 const ignorePaths = ['node_modules', '.git', '.vscode', '.gitignore', 'yarn.lock', 'setup.js']
 const stepsAnswers = { storybook: false, ssr: false }
 
+const loadingAnimation = () => {
+  const P = ['\\', '|', '/', '-']
+  let x = 0
+  return setInterval(() => {
+    x = (x + 1) % P.length
+    process.stdout.write(`\r${P[x]}`)
+  }, 200)
+}
+
 const getRegularExpression = key =>
   new RegExp(`(// <${key}>|{/\\* <${key}> \\*/})([\\s\\S]*?)(// </${key}>|{/\\* </${key}> \\*/})`)
 
@@ -100,13 +109,16 @@ const questionServer = stdout => {
 const modifyFiles = stdout => {
   console.info(stdout)
   return new Promise(async (resolve, reject) => {
+    const loading = loadingAnimation()
     try {
       await scanAndReplace()
       exec('yarn eslint-fix && cross-env NODE_ENV=test prettier --write *.js', (error, output) => {
+        clearInterval(loading)
         console.info(output)
         resolve('\n\n============== Files successfully modified ==============\n\n')
       })
     } catch (error) {
+      clearInterval(loading)
       reject(error)
     }
   })
@@ -115,7 +127,9 @@ const modifyFiles = stdout => {
 const runningYarn = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
+    const loading = loadingAnimation()
     exec('yarn', (error, output) => {
+      clearInterval(loading)
       if (error) {
         reject(error)
       } else {
@@ -152,10 +166,9 @@ const initGit = stdout => {
         rl.question(
           'Would you like to add a remote origin to git?\n1- Yes\n2- No\n',
           selectedOption => {
-            rl.close()
             if (selectedOption === '1') {
               rl.question(
-                'Type in the origin url. e.g. https://github.com/JungleDevs/boilerplate-react.git',
+                'Type in the origin url. e.g. https://github.com/JungleDevs/boilerplate-react.git\n',
                 answer => {
                   exec(`git remote add origin ${answer}`, (gitRemoteError, gitRemoteOutput) => {
                     console.info(gitRemoteOutput)
