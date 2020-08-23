@@ -1,18 +1,15 @@
-import { Record, fromJS } from 'immutable'
+import { Record } from 'immutable'
 import Humps from 'humps'
 
-const Model = (defaultValues, ignoreCamelize) =>
+const Model = defaultValues =>
   class extends Record({
     ...defaultValues,
   }) {
     constructor(props) {
       const camelizedProps = Humps.camelizeKeys({ ...props })
       const sanitizedProps = Object.keys(camelizedProps).reduce((newProps, key) => {
-        if (ignoreCamelize?.includes(key)) {
-          return { ...newProps, [key]: fromJS(props[Humps.decamelize(key)]) }
-        }
         if (key in camelizedProps) {
-          return { ...newProps, [key]: fromJS(camelizedProps[key]) }
+          return { ...newProps, [key]: camelizedProps[key] }
         }
 
         return newProps
@@ -27,7 +24,7 @@ const Model = (defaultValues, ignoreCamelize) =>
         .keySeq()
         .reduce((newProps, key) => {
           const value = camelizedProps[key]
-          return value ? { ...newProps, [key]: fromJS(value) } : newProps
+          return value ? { ...newProps, [key]: value } : newProps
         }, {})
     }
 
