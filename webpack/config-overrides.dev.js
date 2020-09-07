@@ -1,5 +1,6 @@
 /* eslint-disable */
 const resolve = require('./_resolve.js')
+const webpack = require('webpack')
 
 const moduleRules = [
   {
@@ -59,4 +60,23 @@ const moduleRules = [
 module.exports = config => {
   config.module.rules = moduleRules
   config.resolve = resolve
+  config.plugins = [...config.plugins, new webpack.HashedModuleIdsPlugin()]
+
+  config.optimization = {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](?!(redux-logger|redux-devtools-extension)\/).*/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+            return `yarn.${packageName.replace('@', '')}`
+          },
+        },
+      },
+    },
+  }
 }
