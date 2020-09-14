@@ -25,13 +25,21 @@ const handleResponseError = error =>
   )
 
 // decamelize keys for the API
-const decamelizePayload = data =>
-  data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
+const decamelizePayload = data => humps.decamelizeKeys(data)
 
 // Check if should be decamelized or not
-const parsePayload = ({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }) => {
+const parsePayload = ({
+  data,
+  transformPayload,
+  transformOnlyResponse,
+  transformOnlyRequest,
+  transformFormData,
+}) => {
   const shouldTransform = (transformPayload || transformOnlyRequest) && !transformOnlyResponse
-  return shouldTransform ? decamelizePayload(data, transformOnlyRequest) : data
+  if (transformFormData) {
+    return shouldTransform ? createFormData(data, shouldTransform) : createFormData(data)
+  }
+  return shouldTransform ? decamelizePayload(data) : data
 }
 
 const parseParams = (url, config, data) => fn => {
@@ -40,9 +48,9 @@ const parseParams = (url, config, data) => fn => {
     transformPayload = true,
     transformOnlyRequest,
     transformOnlyResponse,
+    transformFormData = false,
     ...configParams
   } = config
-
   if (fn === instance.delete || fn === instance.get) {
     return fn(parseURL(url, removeTrailingSlash), parseConfig(configParams))
       .then(returnData({ transformPayload, transformOnlyResponse, transformOnlyRequest }))
@@ -51,7 +59,13 @@ const parseParams = (url, config, data) => fn => {
 
   return fn(
     parseURL(url, removeTrailingSlash),
-    parsePayload({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }),
+    parsePayload({
+      data,
+      transformPayload,
+      transformOnlyResponse,
+      transformOnlyRequest,
+      transformFormData,
+    }),
     parseConfig(configParams)
   )
     .then(returnData({ transformPayload, transformOnlyResponse, transformOnlyRequest }))
