@@ -37,7 +37,7 @@ const parsePayload = ({
 }) => {
   const shouldTransform = (transformPayload || transformOnlyRequest) && !transformOnlyResponse
   if (transformFormData) {
-    return shouldTransform ? createFormData(data, shouldTransform) : createFormData(data)
+    return createFormData(data, shouldTransform)
   }
   return shouldTransform ? decamelizePayload(data) : data
 }
