@@ -10,7 +10,7 @@ const readdir = promisify(fs.readdir)
 const stat = promisify(fs.stat)
 
 const ignorePaths = ['node_modules', '.git', '.vscode', '.gitignore', 'yarn.lock', 'setup.js']
-const stepsAnswers = { storybook: false, ssr: false }
+const stepsAnswers = { storybook: false, ssr: false, i18n: false, 'no-i18n': true }
 
 const loadingAnimation = () => {
   const P = ['\\', '|', '/', '-']
@@ -98,6 +98,37 @@ const questionServer = stdout => {
         resolve('\n\n================ Expresss server with ssr selected ===============\n\n')
       } else if (answer === '2') {
         resolve('\n\n============== No expresss server with ssr selected ==============\n\n')
+      } else {
+        reject(answer)
+      }
+      rl.close()
+    })
+  })
+}
+
+const questionI18n = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    const rl = readline.createInterface(process.stdin, process.stdout)
+    rl.question('Would you like add internationalization support?\n1- Yes\n2- No\n', answer => {
+      if (answer === '1') {
+        stepsAnswers.i18n = true
+        stepsAnswers['no-i18n'] = false
+        resolve(
+          '\n\n============== Internationalization with react-18next selected =============\n\n'
+        )
+      } else if (answer === '2') {
+        const loading = loadingAnimation()
+        exec(
+          'yarn remove i18next i18next-browser-languagedetector react-i18next',
+          (error, output) => {
+            clearInterval(loading)
+            console.info(output)
+            resolve(
+              '\n\n============ Internationalization with react-18next not selected ============\n\n'
+            )
+          }
+        )
       } else {
         reject(answer)
       }
@@ -206,6 +237,7 @@ const restoreBranch = () => {
 // Execute flow
 questionStorybook()
   .then(stdout => questionServer(stdout))
+  .then(stdout => questionI18n(stdout))
   .then(stdout => modifyFiles(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => deleteGit(stdout))
