@@ -12,10 +12,13 @@ import Router from './router'
 const root = () => {
   const initialState = {}
   const store = configureStore(initialState)
+
   render(
-    <Provider store={store}>
-      <Router />
-    </Provider>,
+    <React.StrictMode>
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    </React.StrictMode>,
     document.getElementById('root')
   )
 }

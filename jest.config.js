@@ -1,5 +1,35 @@
 module.exports = {
+  roots: [
+    "<rootDir>/src"
+  ],
+  collectCoverageFrom: [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.d.ts"
+  ],
+  setupFiles: [
+    "react-app-polyfill/jsdom"
+  ],
+  setupFilesAfterEnv: [
+    './tests/setup.js',
+  ],
+  testMatch: [
+    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+    "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+  ],
+  testEnvironment: "jest-environment-jsdom-fourteen",
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+    "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+    "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+  },
+  transformIgnorePatterns: [
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+    "^.+\\.module\\.(css|sass|scss)$"
+  ],
+  modulePaths: [],
   moduleNameMapper: {
+    "^react-native$": "react-native-web",
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
     '^.+\\.(css)$': 'identity-obj-proxy',
     '^.+\\.(png|jpg|jpeg|svg|txt|ico)$': '<rootDir>/tests/empty-module.js',
     '^_modules/(.*)': '<rootDir>/src/modules/$1',
@@ -19,7 +49,22 @@ module.exports = {
     '\\.worker.js': '<rootDir>/tests/__mocks__/workerMock.js',
     '^_privateDependencies/(.*)': '<rootDir>/private-dependencies/$1',
   },
-  setupFilesAfterEnv: ['./tests/setup.js'],
+  moduleFileExtensions: [
+    "web.js",
+    "js",
+    "web.ts",
+    "ts",
+    "web.tsx",
+    "tsx",
+    "json",
+    "web.jsx",
+    "jsx",
+    "node"
+  ],
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
+  ],
   testPathIgnorePatterns: [
     './private-dependencies',
     '<rootDir>[/\\\\](dist|dist-server|node_modules|.storybook)[/\\\\]',

@@ -1,6 +1,6 @@
 {
   "hooks": {
     "pre-commit": "yarn lint",
-    "pre-push": "yarn test"
+    "pre-push": "cross-env CI=true yarn test"
   }
 }

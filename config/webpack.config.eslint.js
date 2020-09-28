@@ -1,6 +1,7 @@
+/* eslint-disable */
 const path = require('path')
 
-const resolve = require('./_resolve.js')
+const resolve = require('./webpack.config.resolve')
 
 module.exports = {
   entry: ['../src/index.jsx'],

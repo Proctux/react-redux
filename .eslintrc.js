@@ -1,17 +1,18 @@
-const prettierConfiguration = require('./.prettierrc.json')
+const path = require('path')
 
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react'],
   env: {
     browser: true,
+    amd: true,
     node: true,
     jest: true,
   },
   settings: {
     'import/resolver': {
       webpack: {
-        config: './webpack/webpack.config.eslint.js',
+        config: path.resolve(__dirname, 'config', 'webpack.config.eslint.js'),
       },
       'babel-module': {
         extensions: ['.js', '.jsx'],
@@ -20,6 +21,8 @@ module.exports = {
   },
   plugins: ['react', 'prettier', 'react-hooks'],
   rules: {
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'class-methods-use-this': 'error',
     'no-console': [
@@ -48,7 +51,6 @@ module.exports = {
           'server.js',
           'postcss.config.js',
           'tests/setup.js',
-          'webpack/webpack.config.*',
         ],
       },
     ],
@@ -69,7 +71,6 @@ module.exports = {
       },
     ],
     'jsx-a11y/href-no-hash': 0,
-    'prettier/prettier': ['error', prettierConfiguration],
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': 'off',
     'react/jsx-no-bind': [
