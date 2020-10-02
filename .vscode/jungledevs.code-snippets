@@ -118,5 +118,42 @@
 			""
 		],
 		"description": "Create a new service"
+	},
+	"JungleDevs_MaterialView": {
+		"scope": "javascript, javascriptreact",
+		"prefix": "jd:material-view",
+		"body": [
+			"import React from 'react'",
+			"import { Grid, Typography } from '@material-ui/core'",
+			"",
+			"import useStyles from './styles'",
+			"",
+			"const ${4:ComponentName} = () => {",
+			"  const styles = useStyles()",
+			"  return (",
+			"    <Grid className={styles.container}>",
+			"      <Typography>${4:ComponentName}</Typography>",
+			"    </Grid>",
+			"  )",
+			"}",
+			"",
+			"export default ${4:ComponentName})",
+			""
+		],
+		"description": "Create a new component/view with material ui"
+	},
+	"JungleDevs_MaterialStyle": {
+		"scope": "javascript",
+		"prefix": "jd:material-style",
+		"body": [
+			"import { makeStyles } from '@material-ui/styles'",
+			"",
+			"export default makeStyles(() => ({",
+			"  container: {",
+   	 	"    fontSize: '3rem',",
+  		"  },",
+			"}))",
+		],
+		"description": "Export makeStyles from material styles"
 	}
 }

@@ -1,6 +1,7 @@
 /* eslint-disable */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const resolve = require('./_resolve.js')
+const webpack = require('webpack')
 
 const moduleRules = [
   {
@@ -58,17 +59,23 @@ const moduleRules = [
 ]
 
 module.exports = config => {
-  config.plugins[5] = new MiniCssExtractPlugin({
-    filename: '[name].[hash].css',
-    chunkFilename: '[id].[hash].css',
-  })
+  config.plugins = [...config.plugins, new webpack.HashedModuleIdsPlugin()]
 
-  config.optimization.splitChunks.cacheGroups = {
-    styles: {
-      name: 'styles',
-      test: /\.css$/,
+  config.optimization = {
+    runtimeChunk: 'single',
+    splitChunks: {
       chunks: 'all',
-      enforce: true,
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](?!(redux-logger|redux-devtools-extension)\/).*/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+            return `yarn.${packageName.replace('@', '')}`
+          },
+        },
+      },
     },
   }
 
