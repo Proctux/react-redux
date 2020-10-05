@@ -31,13 +31,21 @@ const handleResponseError = error =>
   )
 
 // decamelize keys for the API
-const decamelizePayload = data =>
-  data instanceof FormData ? createFormData(data, false) : humps.decamelizeKeys(data)
+const decamelizePayload = data => humps.decamelizeKeys(data)
 
 // Check if should be decamelized or not
-const parsePayload = ({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }) => {
+const parsePayload = ({
+  data,
+  transformPayload,
+  transformOnlyResponse,
+  transformOnlyRequest,
+  transformFormData,
+}) => {
   const shouldTransform = (transformPayload || transformOnlyRequest) && !transformOnlyResponse
-  return shouldTransform ? decamelizePayload(data, transformOnlyRequest) : data
+  if (transformFormData) {
+    return createFormData(data, shouldTransform)
+  }
+  return shouldTransform ? decamelizePayload(data) : data
 }
 
 const parseParams = (url, config, data, baseURL = null) => method => {
@@ -46,6 +54,7 @@ const parseParams = (url, config, data, baseURL = null) => method => {
     transformPayload = true,
     transformOnlyRequest,
     transformOnlyResponse,
+    transformFormData = false,
     ...configParams
   } = config
 
@@ -58,7 +67,7 @@ const parseParams = (url, config, data, baseURL = null) => method => {
     url: parseURL(url, removeTrailingSlash), // Endpoint's URL
     ...parseConfig(configParams), // Update config params like headers and authorization
     ...(payloadMethods.includes(method) && {
-      data: parsePayload({ data, transformPayload, transformOnlyResponse, transformOnlyRequest }),
+      data: parsePayload({ data, transformPayload, transformOnlyResponse, transformOnlyRequest, transformFormData }),
     }), // Format and add payload if method requires it
   }
 
