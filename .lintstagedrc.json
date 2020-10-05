@@ -1,0 +1,9 @@
+{
+  "*.{jsx,js}": [
+    "eslint --ext js --ext jsx --fix"
+  ],
+  "src/**/*.{css,scss}":[
+    "stylelint --fix"
+  ]
+}
+
