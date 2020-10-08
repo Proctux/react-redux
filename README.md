@@ -32,6 +32,32 @@ To use this boilerplate follow this steps:
 
 - In order to build the application for production use the command: `yarn build`. This will create a `build` folder.
 
+## Terraform
+
+Before start using terraform, you must have `aws-vault` properly configured, you can check more information on how to set up `aws-vault` [here](https://wiki.jungle.rocks/doc/set-up-aws-vault-qCufmyxfyB)
+
+You also need to install terraform cli in your machine, this can be achieved by running the following command
+
+```
+brew install hashicorp/tap/terraform
+```
+
+Inside the terraform folder, open `locals.tf` file and update it to match your project name and arn certificate, after that, update the terraform bucket name on `state.tf`
+
+Once you have everything installed and updated you should run `terraformSetup.sh`, this command will generate both `terraform.sh` and `init.sh` files.
+
+In order to start your terraform project run `init.sh`, this will locally install terraform and create an S3 bucket to store terraform current state.
+
+If you have multiple environments (staging/production) you must first select the appropriate workspace.
+
+You can now run `apply.sh` and generate your aws infrastructure.
+
+### Selecting workspaces
+
+```
+terraform workspace select [staging/production]
+```
+
 # About this boilerplate
 
 ### Base boilerplate
