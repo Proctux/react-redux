@@ -4,18 +4,22 @@ import { Map } from 'immutable'
 
 import { usePrevious } from '_hooks/use-previous'
 
-const useOnSuccess = (action, onSuccess) => {
+const useFetchCall = (action, onSuccess, onReject = () => {}) => {
   const isLoading = useSelector(state => !!state.loading.get(action))
   const wasLoading = usePrevious(isLoading)
   const error = useSelector(state => state.error.get(action, Map()))
 
   useEffect(() => {
-    if (!isLoading && wasLoading && !error.size) {
-      onSuccess()
+    if (!isLoading && wasLoading) {
+      if (!error.size) {
+        onSuccess()
+      } else {
+        onReject(error)
+      }
     }
   })
 
   return [isLoading, error]
 }
 
-export default useOnSuccess
+export default useFetchCall
