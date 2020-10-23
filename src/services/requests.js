@@ -67,7 +67,13 @@ const parseParams = (url, config, data, baseURL = null) => method => {
     url: parseURL(url, removeTrailingSlash), // Endpoint's URL
     ...parseConfig(configParams), // Update config params like headers and authorization
     ...(payloadMethods.includes(method) && {
-      data: parsePayload({ data, transformPayload, transformOnlyResponse, transformOnlyRequest, transformFormData }),
+      data: parsePayload({
+        data,
+        transformPayload,
+        transformOnlyResponse,
+        transformOnlyRequest,
+        transformFormData,
+      }),
     }), // Format and add payload if method requires it
   }
 
