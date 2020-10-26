@@ -171,54 +171,72 @@ const runningYarn = stdout => {
   })
 }
 
-const deleteGit = stdout => {
+const cleanGitCommits = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
-    exec('rm -rf .git/ && rm -rf setup.js', (error, output) => {
+    exec(
+      `git checkout --orphan TEMP_BRANCH &&
+      git add . &&
+      git commit -m "Initial commit" &&
+      git branch -D master &&
+      git branch -m master`,
+      (error, output) => {
+        if (error) {
+          reject(error)
+        } else {
+          console.info(output)
+          resolve('\n\n============== All git commits deleted successfully ==============\n\n')
+        }
+      }
+    )
+  })
+}
+
+const changeGitOrigin = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    exec('git ls-remote --get-url origin', (error, output) => {
       if (error) {
         reject(error)
       } else {
-        console.info(output)
-        resolve('\n\n============== Delete git and setup files ==============\n\n')
+        console.info(`The current git remote origin is ${output}`)
+        const rl = readline.createInterface(process.stdin, process.stdout)
+        rl.question('Would you like to change it?\n1- Yes\n2- No\n', selectedOption => {
+          if (selectedOption === '1') {
+            rl.question(
+              'Type in the origin url. e.g. https://github.com/JungleDevs/boilerplate-react.git\n',
+              answer => {
+                exec(`git remote set-url origin ${answer}`, (gitRemoteError, gitRemoteOutput) => {
+                  console.info(gitRemoteOutput)
+                  if (gitRemoteError) {
+                    reject(gitRemoteError)
+                  } else {
+                    resolve('\n\n============== Git successfully initiated ==============\n\n')
+                  }
+                  rl.close()
+                })
+              }
+            )
+          } else if (selectedOption === '2') {
+            resolve('\n\n============== Git successfully initiated ==============\n\n')
+          } else {
+            reject(selectedOption)
+          }
+        })
       }
     })
   })
 }
 
-const initGit = stdout => {
+const deleteSetup = stdout => {
   console.info(stdout)
   return new Promise((resolve, reject) => {
-    exec('git init', (error, output) => {
+    exec('rm -rf setup.js', (error, output) => {
       if (error) {
         reject(error)
       } else {
         console.info(output)
-        const rl = readline.createInterface(process.stdin, process.stdout)
-        rl.question(
-          'Would you like to add a remote origin to git?\n1- Yes\n2- No\n',
-          selectedOption => {
-            if (selectedOption === '1') {
-              rl.question(
-                'Type in the origin url. e.g. https://github.com/JungleDevs/boilerplate-react.git\n',
-                answer => {
-                  exec(`git remote add origin ${answer}`, (gitRemoteError, gitRemoteOutput) => {
-                    console.info(gitRemoteOutput)
-                    if (gitRemoteError) {
-                      reject(gitRemoteError)
-                    } else {
-                      resolve('\n\n============== Git successfully initiated ==============\n\n')
-                    }
-                    rl.close()
-                  })
-                }
-              )
-            } else if (selectedOption === '2') {
-              resolve('\n\n============== Git successfully initiated ==============\n\n')
-            } else {
-              reject(selectedOption)
-            }
-          }
-        )
+        resolve('\n\n============== Setup files successfully deleted ==============\n\n')
       }
     })
   })
@@ -240,7 +258,8 @@ questionStorybook()
   .then(stdout => questionI18n(stdout))
   .then(stdout => modifyFiles(stdout))
   .then(stdout => runningYarn(stdout))
-  .then(stdout => deleteGit(stdout))
-  .then(stdout => initGit(stdout))
+  .then(stdout => cleanGitCommits(stdout))
+  .then(stdout => changeGitOrigin(stdout))
+  .then(stdout => deleteSetup(stdout))
   .then(stdout => finalMessage(stdout))
   .catch(restoreBranch)
