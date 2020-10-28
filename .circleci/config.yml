@@ -9,7 +9,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  install_dependencies:
+  pre-build:
     <<: *defaults
     steps:
       - checkout
@@ -26,23 +26,8 @@ jobs:
           root: ./
           paths:
             - ./
-  stylelint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn stylelint
-  eslint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn eslint
-  test:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn test
   deploy_staging:
     <<: *defaults
@@ -79,37 +64,17 @@ workflows:
   version: 2
   main_workflow:
     jobs:
-      - install_dependencies:
+      - pre-build:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      - stylelint:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
-      - eslint:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
-      - test:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
       - deploy_staging:
           filters:
             branches:
               only:
                 - staging
           requires:
-            - stylelint
-            - eslint
-            - test
+              - pre-build
       - deploy_production:
           filters:
             tags:
@@ -117,6 +82,4 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - stylelint
-            - eslint
-            - test
+              - pre-build
