@@ -8,6 +8,9 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@material-ui/styles'
 // </material>
 import './bootstrap'
+// <i18n>
+import './i18n'
+// </i18n>
 
 // <material>
 import { theme } from '_utils/material-ui'
