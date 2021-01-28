@@ -512,6 +512,9 @@ module.exports = function (webpackEnv) {
           }
         },
       }),
+      new webpack.ProvidePlugin({
+        Promise: 'es6-promise-promise'
+      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.

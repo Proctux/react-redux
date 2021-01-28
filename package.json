@@ -26,6 +26,7 @@
     "cross-env": "^7.0.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
+    "es6-promise-promise": "^1.0.0",
     "fs-extra": "^9.1.0",
     "humps": "^2.0.1",
     "i18next": "^19.8.4",
