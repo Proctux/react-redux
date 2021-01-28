@@ -1,4 +1,4 @@
-import { Record } from 'immutable'
+import { Record, fromJS } from 'immutable'
 import Humps from 'humps'
 
 const Model = defaultValues =>
@@ -9,7 +9,7 @@ const Model = defaultValues =>
       const camelizedProps = Humps.camelizeKeys({ ...props })
       const sanitizedProps = Object.keys(camelizedProps).reduce((newProps, key) => {
         if (key in camelizedProps) {
-          return { ...newProps, [key]: camelizedProps[key] }
+          return { ...newProps, [key]: fromJS(camelizedProps[key]) }
         }
 
         return newProps

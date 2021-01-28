@@ -32,6 +32,32 @@ To use this boilerplate follow this steps:
 
 - In order to build the application for production use the command: `yarn build`. This will create a `build` folder.
 
+## Terraform
+
+Before start using terraform, you must have `aws-vault` properly configured, you can check more information on how to set up `aws-vault` [here](https://wiki.jungle.rocks/doc/set-up-aws-vault-qCufmyxfyB)
+
+You also need to install terraform cli in your machine, this can be achieved by running the following command
+
+```
+brew install hashicorp/tap/terraform
+```
+
+Inside the terraform folder, open `locals.tf` file and update it to match your project name and arn certificate, after that, update the terraform bucket name on `state.tf`
+
+Once you have everything installed and updated you should run `terraformSetup.sh`, this command will generate both `terraform.sh` and `init.sh` files.
+
+In order to start your terraform project run `init.sh`, this will locally install terraform and create an S3 bucket to store terraform current state.
+
+If you have multiple environments (staging/production) you must first select the appropriate workspace.
+
+You can now run `apply.sh` and generate your aws infrastructure.
+
+### Selecting workspaces
+
+```
+terraform workspace select [staging/production]
+```
+
 # About this boilerplate
 
 ### Base boilerplate
@@ -62,6 +88,30 @@ We chose [reach-router](https://reach.tech/router) as a routing option for its s
 #### Axios
 
 [Axios](https://github.com/axios/axios) is the choice for making API requests. The boilerplate is already setup with the main configurations and is ready to work specially with Django BE Applications.
+
+On implement the API requests (using our configurations) you could use some flags to handle automatically with your payload and response:
+
+| Flag                  | Default | Description                                                    |
+| --------------------- | :-----: | -------------------------------------------------------------- |
+| transformPayload      | `true`  | Transform to snake_case the request and camelCase the response |
+| transformOnlyRequest  | `false` | Transform to snake_case only the request                       |
+| transformOnlyResponse | `false` | Transform to camelCase only the response                       |
+| transformFormData     | `false` | Transform from normal object to FormData your request          |
+| removeTrailingSlash   | `false` | Remove the final slash in the request url                      |
+
+For example, if I use the `transFormData = true` and my payload is `{ fooBar: 'The car' }`, the request should be like this:
+
+```c
+export const createPerfectBMW = payload =>
+  post(['carros', 'marcas'], {
+    transFormData: true,
+  })
+
+```
+
+In this case the `transformPayload` is `true` by default, and will be applied together with the `transformFormData`. So you will have `{ foo_bar: 'The car'}`.
+
+**You can use more than one flag like the example, but if you don't will convert to FormData in the request the flags to transform to snake_case doesn't it will work.**
 
 #### Webpack
 
