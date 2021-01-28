@@ -11,7 +11,14 @@ const readdir = promisify(fs.readdir)
 const stat = promisify(fs.stat)
 
 const ignorePaths = ['node_modules', '.git', '.vscode', '.gitignore', 'yarn.lock', 'setup.js']
-const stepsAnswers = { storybook: false, ssr: false, i18n: false, 'no-i18n': true }
+const stepsAnswers = {
+  storybook: false,
+  ssr: false,
+  i18n: false,
+  'no-i18n': true,
+  material: false,
+  'no-material': true,
+}
 
 const loadingAnimation = () => {
   const P = ['\\', '|', '/', '-']
@@ -125,6 +132,33 @@ const questionI18n = stdout => {
             resolve(
               '\n\n============ Internationalization with react-18next not selected ============\n\n'
             )
+          }
+        )
+      } else {
+        reject(answer)
+      }
+      rl.close()
+    })
+  })
+}
+
+const materialUI = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    const rl = readline.createInterface(process.stdin, process.stdout)
+    rl.question('Would you like to use Material UI?\n1- Yes\n2- No\n', answer => {
+      if (answer === '1') {
+        stepsAnswers.material = true
+        stepsAnswers['no-material'] = false
+        resolve('\n\n============== Material UI selected =============\n\n')
+      } else if (answer === '2') {
+        const loading = loadingAnimation()
+        exec(
+          'yarn remove @material-ui/core @material-ui/styles && rm ./src/utils/material-ui.js ',
+          (error, output) => {
+            clearInterval(loading)
+            console.info(output)
+            resolve('\n\n============ Material UI not selected ============\n\n')
           }
         )
       } else {
@@ -255,6 +289,7 @@ const restoreBranch = () => {
 questionStorybook()
   .then(stdout => questionServer(stdout))
   .then(stdout => questionI18n(stdout))
+  .then(stdout => materialUI(stdout))
   .then(stdout => modifyFiles(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => cleanGitCommits(stdout))
