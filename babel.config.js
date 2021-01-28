@@ -8,6 +8,7 @@ module.exports = api => {
     ['@babel/plugin-transform-runtime', { corejs: 3 }],
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator',
+    ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }]
   ]
 
   if (isProduction) {
