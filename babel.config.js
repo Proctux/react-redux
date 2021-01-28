@@ -18,6 +18,7 @@ module.exports = api => {
   return {
     plugins,
     presets: [
+      'react-app',
       [
         '@babel/preset-env',
         {
