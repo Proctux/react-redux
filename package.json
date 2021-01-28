@@ -44,7 +44,8 @@
     "regenerator-runtime": "^0.13.7",
     "resolve": "1.15.0",
     "semver": "6.3.0",
-    "ts-pnp": "1.1.6"
+    "ts-pnp": "1.1.6",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
