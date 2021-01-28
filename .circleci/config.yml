@@ -5,11 +5,11 @@
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:12.16.1
+    - image: circleci/node:10.17.0
 
 version: 2
 jobs:
-  install_dependencies:
+  pre-build:
     <<: *defaults
     steps:
       - checkout
@@ -26,23 +26,8 @@ jobs:
           root: ./
           paths:
             - ./
-  stylelint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn stylelint
-  eslint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn eslint
-  test:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ./
       - run: yarn test
   deploy_staging:
     <<: *defaults
@@ -53,7 +38,8 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
       - run: sudo apt-get update && sudo apt-get install -y python-dev
-      - run: sudo apt update && sudo apt install python-pip
+      - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
+      - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
       - run: yarn build
       - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_STAGING --delete --cache-control "public, max-age=604800"
@@ -67,7 +53,8 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
       - run: sudo apt-get update && sudo apt-get install -y python-dev
-      - run: sudo apt update && sudo apt install python-pip
+      - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
+      - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
       - run: yarn build
       - run: aws s3 sync build/ s3://$REACT_S3_BUCKET_PRODUCTION --delete --cache-control "public, max-age=604800"
@@ -77,37 +64,17 @@ workflows:
   version: 2
   main_workflow:
     jobs:
-      - install_dependencies:
+      - pre-build:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      - stylelint:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
-      - eslint:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
-      - test:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-          requires:
-            - install_dependencies
       - deploy_staging:
           filters:
             branches:
               only:
                 - staging
           requires:
-            - stylelint
-            - eslint
-            - test
+            - pre-build
       - deploy_production:
           filters:
             tags:
@@ -115,6 +82,4 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - stylelint
-            - eslint
-            - test
+            - pre-build
