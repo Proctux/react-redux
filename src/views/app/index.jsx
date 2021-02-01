@@ -43,11 +43,11 @@ const App = () => {
       {/* <no-i18n> */}
       {car.marca ? (
         <p
-        className={styles['App-intro']}
+          className={styles['App-intro']}
         >{`The ${car.marca} ${car.modelo} ${car.anoModelo} - ${car.combustivel} (FIPE ${car.codigoFipe}) was evaluated at ${car.valor}`}</p>
-        ) : (
-          <p className={styles['App-intro']}>Loading...</p>
-          )}
+      ) : (
+        <p className={styles['App-intro']}>Loading...</p>
+      )}
       {/* </no-i18n> */}
     </div>
   )
