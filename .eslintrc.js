@@ -1,5 +1,7 @@
 const path = require('path')
 
+const prettierConfiguration = require('./.prettierrc.json')
+
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react', 'react-app'],
@@ -71,6 +73,7 @@ module.exports = {
       },
     ],
     'jsx-a11y/href-no-hash': 0,
+    'prettier/prettier': ['error', prettierConfiguration],
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': 'off',
     'react/jsx-no-bind': [
