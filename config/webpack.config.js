@@ -330,6 +330,7 @@ module.exports = function (webpackEnv) {
               use: getStyleLoaders({
                 sourceMap: isEnvProduction && shouldUseSourceMap,
                 importLoaders: 1,
+                url: true,
                 modules: {
                   localIdentName: '[name]__[local]___[hash:base64:5]',
                 },
