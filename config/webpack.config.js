@@ -19,7 +19,6 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
-const postcssNormalize = require('postcss-normalize')
 
 const getClientEnvironment = require('./env')
 const modules = require('./modules')
@@ -74,37 +73,7 @@ module.exports = function (webpackEnv) {
         options: cssOptions,
       },
       {
-        // Options for PostCSS as we reference these options twice
-        // Adds vendor prefixing based on your specified browser support in
-        // package.json
         loader: require.resolve('postcss-loader'),
-        options: {
-          // Necessary for external CSS imports to work
-          // https://github.com/facebook/create-react-app/issues/2677
-          ident: 'postcss',
-          plugins: () => [
-            require('postcss-import')({
-              addDependencyTo: webpack,
-            }),
-            require('postcss-custom-media')({
-              importFrom: './src/config/media-queries.js',
-            }),
-            require('autoprefixer')(),
-            require('postcss-nested'),
-            require('postcss-flexbugs-fixes'),
-            require('postcss-preset-env')({
-              autoprefixer: {
-                flexbox: 'no-2009',
-              },
-              stage: 3,
-            }),
-            // Adds PostCSS Normalize as the reset css with default options,
-            // so that it honors browserslist config in package.json
-            // which in turn let's users customize the target behavior as per their needs.
-            postcssNormalize(),
-          ],
-          sourceMap: isEnvProduction && shouldUseSourceMap,
-        },
       },
     ].filter(Boolean)
     if (preProcessor) {
