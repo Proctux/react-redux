@@ -2,6 +2,7 @@
 const path = require('path')
 
 module.exports = {
+  _: path.resolve(__dirname, '..', 'src/'),
   _modules: path.resolve(__dirname, '..', 'src/modules/'),
   _components: path.resolve(__dirname, '..', 'src/components/'),
   _config: path.resolve(__dirname, '..', 'src/config/'),
