@@ -5,8 +5,9 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
 }
 
 // This will configure your cloudfront distribution
-// It allows get from your s3 bucket and the protocol policy to
-// redirect to HTTPS
+// It allows cloudfront to send get requests to the s3 bucket
+// where your application is stored and specifies that every request will
+// be redirected to HTTPS
 resource "aws_cloudfront_distribution" "www_distribution" {
   origin {
     domain_name = var.bucket.bucket_regional_domain_name

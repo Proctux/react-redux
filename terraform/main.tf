@@ -20,7 +20,7 @@ module "s3" {
 // The source points to the cloudfront configuration folder.
 // The buckets contains the output from the S3 module above,
 // it's the bucket that you will store your files.
-// The certificate_arn is the SSL certificate that your need
+// The certificate_arn is the SSL certificate that you need
 // to create and validate before applying terraform. This value
 // is defined in the locals.tf together with the alias based on the
 // desired workspace.
