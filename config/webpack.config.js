@@ -341,6 +341,20 @@ module.exports = function (webpackEnv) {
               // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
             },
+            // Support CSS library import
+            {
+              test: cssRegex,
+              include: /node_modules/,
+              use: [
+                'style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: false,
+                  },
+                },
+              ],
+            },
             // Opt-in support for SASS (using .scss or .sass extensions).
             {
               test: sassRegex,
@@ -416,10 +430,12 @@ module.exports = function (webpackEnv) {
           : undefined),
       }),
       new ESLintPlugin({
-        cache: false,
+        cache: true,
         formatter: require.resolve('react-dev-utils/eslintFormatter'),
         eslintPath: require.resolve('eslint'),
         resolvePluginsRelativeTo: __dirname,
+        failOnError: false,
+        quiet: true,
       }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
@@ -483,7 +499,7 @@ module.exports = function (webpackEnv) {
         },
       }),
       new webpack.ProvidePlugin({
-        Promise: 'es6-promise-promise'
+        Promise: 'es6-promise-promise',
       }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
