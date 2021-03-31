@@ -5,7 +5,7 @@
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:10.17.0
+    - image: circleci/node:12.16.1
 
 version: 2
 jobs:
@@ -72,7 +72,7 @@ workflows:
               only:
                 - staging
           requires:
-              - pre-build
+            - pre-build
       - deploy_production:
           filters:
             tags:
@@ -80,4 +80,4 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-              - pre-build
+            - pre-build

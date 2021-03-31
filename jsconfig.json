@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "jsx": "react",
     "paths": {
+      "_/*": ["src/*"],
       "_modules/*": ["src/modules/*"],
       "_components/*": ["src/components/*"],
       "_config/*": ["src/config/*"],

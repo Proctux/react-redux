@@ -14,7 +14,7 @@ console.error = message => {
 
 window.matchMedia =
   window.matchMedia || // eslint-disable-next-line func-names
-  function() {
+  function () {
     return {
       matches: false,
       addListener() {},

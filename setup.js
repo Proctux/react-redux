@@ -1,7 +1,8 @@
 const fs = require('fs')
-const path = require('path')
 const readline = require('readline')
 const { exec } = require('child_process')
+
+const path = require('path')
 const { promisify } = require('util')
 
 const writeFile = promisify(fs.writeFile)
@@ -10,7 +11,14 @@ const readdir = promisify(fs.readdir)
 const stat = promisify(fs.stat)
 
 const ignorePaths = ['node_modules', '.git', '.vscode', '.gitignore', 'yarn.lock', 'setup.js']
-const stepsAnswers = { storybook: false, ssr: false, i18n: false, 'no-i18n': true }
+const stepsAnswers = {
+  storybook: false,
+  ssr: false,
+  i18n: false,
+  'no-i18n': true,
+  material: false,
+  'no-material': true,
+}
 
 const loadingAnimation = () => {
   const P = ['\\', '|', '/', '-']
@@ -27,46 +35,43 @@ const getRegularExpression = key =>
 const scanAndReplace = async (directoryName = './', results = []) => {
   const stepsAnswersKeys = Object.keys(stepsAnswers)
   const files = await readdir(directoryName)
-  try {
-    await Promise.all(
-      files.map(async file => {
-        if (ignorePaths.includes(file)) {
-          return
-        }
 
-        const fullPath = path.join(directoryName, file)
-        const stats = await stat(fullPath)
-        if (stats.isDirectory()) {
-          await scanAndReplace(fullPath, results)
-        } else {
-          const originalContent = await readFile(fullPath, 'utf8')
-          let newContent = originalContent
+  await Promise.all(
+    files.map(async file => {
+      if (ignorePaths.includes(file)) {
+        return
+      }
 
-          stepsAnswersKeys.forEach(key => {
-            if (getRegularExpression(key).test(newContent)) {
-              const re = getRegularExpression(key)
+      const fullPath = path.join(directoryName, file)
+      const stats = await stat(fullPath)
+      if (stats.isDirectory()) {
+        await scanAndReplace(fullPath, results)
+      } else {
+        const originalContent = await readFile(fullPath, 'utf8')
+        let newContent = originalContent
 
-              let match = re.exec(newContent)
-              while (match) {
-                if (stepsAnswers[key]) {
-                  newContent = newContent.replace(getRegularExpression(key), match[2])
-                } else {
-                  newContent = newContent.replace(getRegularExpression(key), '')
-                }
-                match = re.exec(newContent)
+        stepsAnswersKeys.forEach(key => {
+          if (getRegularExpression(key).test(newContent)) {
+            const re = getRegularExpression(key)
+
+            let match = re.exec(newContent)
+            while (match) {
+              if (stepsAnswers[key]) {
+                newContent = newContent.replace(getRegularExpression(key), match[2])
+              } else {
+                newContent = newContent.replace(getRegularExpression(key), '')
               }
+              match = re.exec(newContent)
             }
-          })
-          if (originalContent !== newContent) {
-            await writeFile(fullPath, newContent)
           }
-          results.push(fullPath)
+        })
+        if (originalContent !== newContent) {
+          await writeFile(fullPath, newContent)
         }
-      })
-    )
-  } catch (error) {
-    throw error
-  }
+        results.push(fullPath)
+      }
+    })
+  )
   return results
 }
 
@@ -137,8 +142,36 @@ const questionI18n = stdout => {
   })
 }
 
+const materialUI = stdout => {
+  console.info(stdout)
+  return new Promise((resolve, reject) => {
+    const rl = readline.createInterface(process.stdin, process.stdout)
+    rl.question('Would you like to use Material UI?\n1- Yes\n2- No\n', answer => {
+      if (answer === '1') {
+        stepsAnswers.material = true
+        stepsAnswers['no-material'] = false
+        resolve('\n\n============== Material UI selected =============\n\n')
+      } else if (answer === '2') {
+        const loading = loadingAnimation()
+        exec(
+          'yarn remove @material-ui/core @material-ui/styles && rm ./src/utils/material-ui.js ',
+          (error, output) => {
+            clearInterval(loading)
+            console.info(output)
+            resolve('\n\n============ Material UI not selected ============\n\n')
+          }
+        )
+      } else {
+        reject(answer)
+      }
+      rl.close()
+    })
+  })
+}
+
 const modifyFiles = stdout => {
   console.info(stdout)
+  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const loading = loadingAnimation()
     try {
@@ -256,6 +289,7 @@ const restoreBranch = () => {
 questionStorybook()
   .then(stdout => questionServer(stdout))
   .then(stdout => questionI18n(stdout))
+  .then(stdout => materialUI(stdout))
   .then(stdout => modifyFiles(stdout))
   .then(stdout => runningYarn(stdout))
   .then(stdout => cleanGitCommits(stdout))
