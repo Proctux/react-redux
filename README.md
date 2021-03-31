@@ -91,6 +91,7 @@ We chose [reach-router](https://reach.tech/router) as a routing option for its s
 
 On implement the API requests (using our configurations) you could use some flags to handle automatically with your payload and response:
 
+<<<<<<< HEAD
 | Flag                  | Default | Description                                                    |
 | --------------------- | :-----: | -------------------------------------------------------------- |
 | transformPayload      | `true`  | Transform to snake_case the request and camelCase the response |
@@ -101,6 +102,17 @@ On implement the API requests (using our configurations) you could use some flag
 
 For example, if I use the `transFormData = true` and my payload is `{ fooBar: 'The car' }`, the request should be like this:
 
+=======
+| Flag | Default | Description  |
+| ----- |:-----:| ----- |
+| transformPayload     | `true` | Transform to snake_case the request and camelCase the response  |
+| transformOnlyRequest     | `false` |  Transform to snake_case only the request |
+| transformOnlyResponse     | `false` | Transform to camelCase only the response |
+| transformFormData     | `false` | Transform from normal object to FormData your request |
+| removeTrailingSlash     | `false` | Remove the final slash in the request url |
+
+For example, if I use the `transFormData = true` and my payload is `{ fooBar: 'The car' }`, the request should be like this:
+>>>>>>> master
 ```c
 export const createPerfectBMW = payload =>
   post(['carros', 'marcas'], {
@@ -108,7 +120,10 @@ export const createPerfectBMW = payload =>
   })
 
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 In this case the `transformPayload` is `true` by default, and will be applied together with the `transformFormData`. So you will have `{ foo_bar: 'The car'}`.
 
 **You can use more than one flag like the example, but if you don't will convert to FormData in the request the flags to transform to snake_case doesn't it will work.**
