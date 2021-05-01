@@ -1,0 +1,18 @@
+.button-content {
+  width: 100%;
+  padding: 1.1rem;
+  border: none;
+  border-radius: 0.2rem;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.default {
+  background-color: #009b3a;
+  color: white;
+}
+
+.secondary {
+  background-color: white;
+  color: #009b3a;
+}
