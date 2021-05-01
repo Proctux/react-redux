@@ -1,0 +1,58 @@
+.input-container {
+  width: 100%;
+  width: 30rem;
+  height: 100%;
+  max-height: 5rem;
+}
+
+.hidden-label {
+  position: absolute;
+  left: -10000rem;
+  top: auto;
+  width: 0.1rem;
+  height: 0.1rem;
+  overflow: hidden;
+}
+
+.input-content {
+  border: 0;
+  width: 100%;
+  height: 4.8rem;
+  outline: none;
+  font-size: 1.6rem;
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 1.6rem;
+  }
+}
+
+.input-box {
+  display: flex;
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.38);
+}
+
+.input-on-focus {
+  border-bottom: 0.2rem solid #009b3a;
+}
+
+.input-error {
+  border-bottom: 0.2rem solid #d50000;
+}
+
+.input-error-sentence {
+  font-size: 1.2rem;
+  padding: 0.8rem 0;
+  color: #d50000;
+}
+
+.show-password-button {
+  background: transparent;
+  border: 0;
+}
+
+.show-password-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  fill: rgba(0, 0, 0, 0.38);
+}
