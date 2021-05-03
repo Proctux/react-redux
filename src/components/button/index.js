@@ -4,19 +4,25 @@ import classnames from 'classnames'
 
 import styles from './styles.css'
 
-const ButtonTheme = {
+export const ButtonTheme = {
   DEFAULT: 'default',
   SECONDARY: 'secondary',
 }
 
-const Button = ({ icon, children, onClick, type, disabled, theme, className }) => {
+export const ButtonSize = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  LARGE: 'large',
+}
+
+const Button = ({ icon, children, onClick, type, disabled, theme, className, size }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={classnames(styles['button-content'], styles[theme], className)}
+      className={classnames(styles['button-content'], styles[theme], className, styles[size])}
     >
       {icon && <img src={icon} className={styles['button-icon']} alt="Icon" />}
       {children}
@@ -38,6 +44,7 @@ Button.propTypes = {
   type: PropTypes.string,
   theme: PropTypes.oneOf(Object.values(ButtonTheme)),
   className: PropTypes.string,
+  size: PropTypes.oneOf(Object.values(ButtonSize)),
 }
 
 Button.defaultProps = {
@@ -48,6 +55,7 @@ Button.defaultProps = {
   type: 'button',
   theme: ButtonTheme.DEFAULT,
   className: '',
+  size: ButtonSize.MEDIUM,
 }
 
 export default Button

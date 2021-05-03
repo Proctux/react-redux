@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { navigate } from '@reach/router'
 
 import { login } from '_modules/authentication/actions'
 import jungleLogo from '_assets/images/jungle.png'
@@ -45,6 +46,7 @@ const Login = () => {
   useEffect(() => {
     if (accessToken) {
       dispatch(getUser())
+      navigate('/dashboard')
     }
   }, [accessToken])
 

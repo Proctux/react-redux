@@ -1,0 +1,27 @@
+.change-name-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .change-name-title {
+    margin-bottom: 3rem;
+  }
+
+  .change-form {
+    display: grid;
+    grid-template-columns: 32.5rem 16rem;
+    grid-template-areas: 'input button';
+    grid-gap: 2.4rem;
+
+    .change-input {
+      grid-area: input;
+      align-self: center;
+    }
+
+    .change-button {
+      grid-area: button;
+      align-self: center;
+    }
+  }
+}

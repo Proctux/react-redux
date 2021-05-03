@@ -1,0 +1,48 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .user-name {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7.5rem;
+
+  .logged-as {
+    margin-bottom: 5rem;
+  }
+
+  .avatar-container {
+    border-radius: 50%;
+    border: 0.2rem solid var(--warm-gray);
+    height: 7.5rem;
+    width: 7.5rem;
+    background-image: url('src/assets/icons/user-picture-placeholder.svg');
+  }
+}
+
+.title-bold-information {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.user {
+  font-size: 2rem;
+}
+
+.user-email {
+  margin-bottom: 1rem;
+}
+
+.user-id {
+  margin-bottom: 10rem;
+}

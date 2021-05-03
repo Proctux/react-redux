@@ -1,0 +1,19 @@
+.header-container {
+  padding: 2.3rem 12rem;
+  background: var(--kelley-green);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16.5rem 1fr 9rem;
+  grid-template-areas: 'logo . logout';
+
+  .header-logo {
+    fill: white;
+    grid-area: logo;
+    height: 4.1rem;
+    width: 16.5rem;
+  }
+
+  .logout-button {
+    grid-area: logout;
+  }
+}
