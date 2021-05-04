@@ -21,12 +21,35 @@
     margin-bottom: 5rem;
   }
 
+  .avatar-picture {
+    border-radius: 50%;
+    height: 7.5rem;
+    width: 7.5rem;
+  }
+
   .avatar-container {
     border-radius: 50%;
     border: 0.2rem solid var(--warm-gray);
     height: 7.5rem;
     width: 7.5rem;
-    background-image: url('src/assets/icons/user-picture-placeholder.svg');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    .avatar-head {
+      height: 3rem;
+      width: 3rem;
+      background-color: var(--warm-gray);
+      border-radius: 50%;
+    }
+
+    .avatar-body {
+      height: 3rem;
+      width: 5rem;
+      background-color: var(--warm-gray);
+      border-radius: 50%;
+    }
   }
 }
 
@@ -45,4 +68,32 @@
 
 .user-id {
   margin-bottom: 10rem;
+}
+
+.change-name-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .change-name-title {
+    margin-bottom: 3rem;
+  }
+
+  .change-form {
+    display: grid;
+    grid-template-columns: 32.5rem 16rem;
+    grid-template-areas: 'input button';
+    grid-gap: 2.4rem;
+
+    .change-input {
+      grid-area: input;
+      align-self: center;
+    }
+
+    .change-button {
+      grid-area: button;
+      align-self: center;
+    }
+  }
 }

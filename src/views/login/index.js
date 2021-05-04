@@ -48,7 +48,7 @@ const Login = () => {
       dispatch(getUser())
       navigate('/dashboard')
     }
-  }, [accessToken])
+  }, [accessToken, dispatch])
 
   return (
     <div className={styles.login}>

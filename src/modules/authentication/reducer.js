@@ -4,7 +4,7 @@ import humps from 'humps'
 import { createReducer } from '_utils/redux'
 import { Authentication } from '_models'
 
-import { LOGIN } from './actions'
+import { LOGIN, LOGOUT } from './actions'
 
 const INITIAL_STATE = new Authentication()
 
@@ -18,6 +18,7 @@ const saveAccessToken = payload => {
 
 const authentication = createReducer(INITIAL_STATE, {
   [LOGIN.FULFILLED]: (state, { payload }) => saveAccessToken({ accessToken: payload.accessToken }),
+  [LOGOUT]: (state, { payload }) => saveAccessToken({ accessToken: '' }),
 })
 
 export default authentication

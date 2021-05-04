@@ -15,9 +15,7 @@ const root = () => {
   const accessToken = cookies.load('accessToken', { path: '/' })
 
   const initialState = {
-    user: user
-      ? new User({ ...JSON.parse(user), accessToken: accessToken || user.accessToken })
-      : new User(),
+    user: user ? new User({ ...JSON.parse(user) }) : new User(),
     authentication: accessToken ? new Authentication({ accessToken }) : new Authentication(),
   }
 
