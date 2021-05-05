@@ -33,7 +33,7 @@
 }
 
 .input-on-focus {
-  border-bottom: 0.2rem solid var(-kelley-green);
+  border-bottom: 0.2rem solid var(--kelley-green);
 }
 
 .input-error {

@@ -9,10 +9,10 @@ const App = ({ children }) => {
   const accessToken = useSelector(tokenSelector)
 
   if (!accessToken) {
-    return <Redirect to="/login" />
+    return <Redirect to="/login" noThrow />
   }
 
-  return <div>{children}</div>
+  return <main>{children}</main>
 }
 
 App.propTypes = {

@@ -8,6 +8,7 @@ import { getUserSelector } from '_modules/user/selectors'
 import Input from '_components/input'
 import Button, { ButtonTheme } from '_components/button'
 import { getUser, updateUser } from '_modules/user/actions'
+import Spinner, { SpinnerTheme } from '_components/spinner'
 
 import styles from './styles.css'
 
@@ -25,8 +26,7 @@ function getBase64(file) {
 const Dashboard = () => {
   const user = useSelector(getUserSelector)
   const [userNewName, setUserNewName] = useState('')
-  // const [userAvatar, setUserAvatar] = useState(user.avatar || '')
-  // const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -55,65 +55,83 @@ const Dashboard = () => {
     state(value)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
+    setIsLoading(true)
 
     if (userNewName) {
-      dispatch(updateUser({ name: userNewName }, user.id))
+      await dispatch(updateUser({ name: userNewName }, user.id))
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
+    setIsLoading(true)
     dispatch(getUser())
+    setIsLoading(false)
   }, [dispatch])
 
   return (
     <div className={styles['dashboard-container']}>
       <Header />
 
-      <main className={styles['dashboard-content']}>
-        <h1 className={classnames(styles['title-bold-information'], styles['logged-as'])}>
-          {LOGGED_AS}
-        </h1>
+      {isLoading ? (
+        <div className={styles['user-loading']}>
+          <Spinner color="black" size={SpinnerTheme.X_LARGE} />
+        </div>
+      ) : (
+        <>
+          <section className={styles['dashboard-content']}>
+            <h1 className={classnames(styles['title-bold-information'], styles['logged-as'])}>
+              {LOGGED_AS}
+            </h1>
 
-        {user.avatar ? (
-          <button type="button" onClick={handleChangeAvatar}>
-            <img className={styles['avatar-picture']} src={user.avatar} alt="User avatar" />
-          </button>
-        ) : (
-          <div className={styles['avatar-container']}>
-            <div className={styles['avatar-head']} />
-            <div className={styles['avatar-body']} />
+            {user.avatar ? (
+              <button type="button" onClick={handleChangeAvatar}>
+                <img className={styles['avatar-picture']} src={user.avatar} alt="User avatar" />
+              </button>
+            ) : (
+              <div className={styles['avatar-container']}>
+                <div className={styles['avatar-head']} />
+                <div className={styles['avatar-body']} />
+              </div>
+            )}
+          </section>
+
+          <h2 className={classnames(styles['title-bold-information'], styles['user-name'])}>
+            {user.name}
+          </h2>
+          <p className={classnames(styles['user-email'], styles.user)}>{user.email}</p>
+          <p className={classnames(styles['user-id'], styles.user)}>{`${USER_ID} ${user.id}`}</p>
+
+          <div className={styles['change-name-box-container']}>
+            <h3
+              className={classnames(styles['change-name-title'], styles['title-bold-information'])}
+            >
+              {CHANGE_NAME}
+            </h3>
+
+            <form className={styles['change-form']} onSubmit={handleSubmit}>
+              <Input
+                label="Name"
+                hiddenLabel
+                value={userNewName}
+                onChange={event => handleOnChange(event, setUserNewName)}
+                id="change-name"
+                className={styles['change-input']}
+                placeholder="Type your new name here…"
+              />
+              {isLoading ? (
+                <Spinner className={styles.change} color="black" />
+              ) : (
+                <Button className={styles.change} type="submit" theme={ButtonTheme.DEFAULT}>
+                  Change Name
+                </Button>
+              )}
+            </form>
           </div>
-        )}
-      </main>
-
-      <h2 className={classnames(styles['title-bold-information'], styles['user-name'])}>
-        {user.name}
-      </h2>
-      <p className={classnames(styles['user-email'], styles.user)}>{user.email}</p>
-      <p className={classnames(styles['user-id'], styles.user)}>{`${USER_ID}: ${user.id}`}</p>
-
-      <div className={styles['change-name-box-container']}>
-        <h1 className={classnames(styles['change-name-title'], styles['title-bold-information'])}>
-          {CHANGE_NAME}
-        </h1>
-
-        <form className={styles['change-form']} onSubmit={handleSubmit}>
-          <Input
-            label="Name"
-            hiddenLabel
-            value={userNewName}
-            onChange={event => handleOnChange(event, setUserNewName)}
-            id="change-name"
-            className={styles['change-input']}
-            placeholder="Type your new name here…"
-          />
-          <Button className={styles['change-button']} type="submit" theme={ButtonTheme.DEFAULT}>
-            Change Name
-          </Button>
-        </form>
-      </div>
+        </>
+      )}
     </div>
   )
 }

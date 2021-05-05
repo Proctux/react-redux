@@ -4,6 +4,10 @@
   align-items: center;
   justify-content: center;
 
+  .user-loading {
+    margin-top: 10rem;
+  }
+
   .user-name {
     margin-top: 3rem;
     margin-bottom: 1rem;
@@ -83,7 +87,7 @@
   .change-form {
     display: grid;
     grid-template-columns: 32.5rem 16rem;
-    grid-template-areas: 'input button';
+    grid-template-areas: 'input button-loading';
     grid-gap: 2.4rem;
 
     .change-input {
@@ -91,8 +95,8 @@
       align-self: center;
     }
 
-    .change-button {
-      grid-area: button;
+    .change {
+      grid-area: button-loading;
       align-self: center;
     }
   }
