@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { navigate } from '@reach/router'
 
 import { login } from '_modules/authentication/actions'
 import jungleLogo from '_assets/images/jungle.png'
 import Button from '_components/button'
 import Input from '_components/input'
-import { tokenSelector } from '_modules/authentication/selectors'
+import { tokenSelector, loginErrorSelector } from '_modules/authentication/selectors'
 import { getUser } from '_modules/user/actions'
 
 import styles from './styles.css'
@@ -16,6 +17,25 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
   const accessToken = useSelector(tokenSelector)
+  const loginError = useSelector(loginErrorSelector)
+
+  const validateAPIErrors = useCallback(() => {
+    const errorPayload = {}
+
+    if (loginError.get('error')) {
+      loginError.get('error') === 'Incorrect password'
+        ? (errorPayload.password = loginError.get('error'))
+        : (errorPayload.email = loginError.get('error'))
+    }
+
+    setErrors(errorPayload)
+  }, [loginError])
+
+  useEffect(() => {
+    if (loginError.size) {
+      validateAPIErrors()
+    }
+  }, [validateAPIErrors, loginError])
 
   const dispatch = useDispatch()
 
@@ -30,7 +50,7 @@ const Login = () => {
       event.preventDefault()
 
       if (email && password) {
-        dispatch(login({ email, password }))
+        await dispatch(login({ email, password }))
       } else {
         let credentialErrors = {}
 
@@ -45,8 +65,9 @@ const Login = () => {
   useEffect(() => {
     if (accessToken) {
       dispatch(getUser())
+      navigate('/dashboard')
     }
-  }, [accessToken])
+  }, [accessToken, dispatch])
 
   return (
     <div className={styles.login}>

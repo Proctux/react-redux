@@ -1,0 +1,103 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .user-loading {
+    margin-top: 10rem;
+  }
+
+  .user-name {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7.5rem;
+
+  .logged-as {
+    margin-bottom: 5rem;
+  }
+
+  .avatar-picture {
+    border-radius: 50%;
+    height: 7.5rem;
+    width: 7.5rem;
+  }
+
+  .avatar-container {
+    border-radius: 50%;
+    border: 0.2rem solid var(--warm-gray);
+    height: 7.5rem;
+    width: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    .avatar-head {
+      height: 3rem;
+      width: 3rem;
+      background-color: var(--warm-gray);
+      border-radius: 50%;
+    }
+
+    .avatar-body {
+      height: 3rem;
+      width: 5rem;
+      background-color: var(--warm-gray);
+      border-radius: 50%;
+    }
+  }
+}
+
+.title-bold-information {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.user {
+  font-size: 2rem;
+}
+
+.user-email {
+  margin-bottom: 1rem;
+}
+
+.user-id {
+  margin-bottom: 10rem;
+}
+
+.change-name-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .change-name-title {
+    margin-bottom: 3rem;
+  }
+
+  .change-form {
+    display: grid;
+    grid-template-columns: 32.5rem 16rem;
+    grid-template-areas: 'input button-loading';
+    grid-gap: 2.4rem;
+
+    .change-input {
+      grid-area: input;
+      align-self: center;
+    }
+
+    .change {
+      grid-area: button-loading;
+      align-self: center;
+    }
+  }
+}

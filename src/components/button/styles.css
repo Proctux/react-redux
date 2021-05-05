@@ -8,11 +8,23 @@
 }
 
 .default {
-  background-color: #009b3a;
+  background-color: var(--kelley-green);
   color: white;
 }
 
 .secondary {
   background-color: white;
-  color: #009b3a;
+  color: var(-kelley-green);
+}
+
+.medium {
+  height: 3.6rem;
+}
+
+.height {
+  height: 4.8rem;
+}
+
+.small {
+  height: 2.4rem;
 }

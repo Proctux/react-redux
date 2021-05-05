@@ -1,17 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from '@reach/router'
 import { useSelector } from 'react-redux'
 
-import { getUserSelector } from '_modules/user/selectors'
+import { tokenSelector } from '_/modules/authentication/selectors'
 
-const App = () => {
-  const user = useSelector(getUserSelector)
+const App = ({ children }) => {
+  const accessToken = useSelector(tokenSelector)
 
-  if (!user?.accessToken) {
-    return <Redirect to="/login" />
+  if (!accessToken) {
+    return <Redirect to="/login" noThrow />
   }
 
-  return <div />
+  return <main>{children}</main>
+}
+
+App.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default React.memo(App)
